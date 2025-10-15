@@ -15,10 +15,10 @@ const soql = [`SELECT ${formattedFields}`, `SEARCH "fountain"`];
 const query = soql.join(" ");
 
 // Helper variables to get results from all pages
-// API request seems limited to 1 page / 40 results at a time
+// API request seems limited to 1 page / 30 results at a time
 // Else json.parse syntaxError
-const TOTAL_PAGES = 7;
-const RESULTS_PER_PAGE = 40;
+const TOTAL_PAGES = 9;
+const RESULTS_PER_PAGE = 30;
 
 /* Fetch results from all pages */
 async function getFountainsFromAPI() {
