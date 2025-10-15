@@ -7,27 +7,48 @@ import FIELDS from "./queryFields.js";
 
 const APP_TOKEN = process.env.APP_TOKEN;
 
-const SEARCH_TERM = "fountain";
-const formatted = FIELDS.map((field) => `${field}%2C`)
-  .join("%20")
-  .replace(/%2C$/, "");
-
 // Socrata query language: https://dev.socrata.com/docs/queries/
-const QUERY = `SELECT%20${formatted}%20SEARCH%20%22${SEARCH_TERM}%22`;
+const formattedFields = FIELDS.map((field) => `${field},`)
+  .join(" ")
+  .replace(/,$/, "");
+const soql = [`SELECT ${formattedFields}`, `SEARCH "fountain"`];
+const query = soql.join(" ");
 
-// Anything > 40 results doesn't return full output
-// String gets cut off and causes json.parse syntaxError due to unclosed quote
+// Helper variables to get results from all pages
+// API request seems limited to 1 page / 40 results at a time
+// Else json.parse syntaxError
+const TOTAL_PAGES = 7;
 const RESULTS_PER_PAGE = 40;
-// Pagination to get all expected 252 results
-const PAGE_COUNT = 1; // Set to 7 in prod
 
+/* Fetch results from all pages */
+async function getFountainsFromAPI() {
+  let results = [];
+  for (let page = 1; page <= TOTAL_PAGES; page++) {
+    console.log(`Getting page ${page}`);
+    await getPageData(page, results);
+  }
+  return results;
+}
+
+/* Helper function to fetch one page of results from API */
 async function getPageData(page, results) {
   try {
-    const resp = await fetch(
-      `https://data.cityofnewyork.us/api/v3/views/6rrm-vxj9/query.json?pageNumber=${page}&pageSize=${RESULTS_PER_PAGE}&app_token=${APP_TOKEN}&query=${QUERY}`
-    );
-    if (!resp.ok)
+    const baseUrl =
+      "https://data.cityofnewyork.us/api/v3/views/6rrm-vxj9/query.json";
+
+    const params = {
+      pageNumber: page,
+      pageSize: RESULTS_PER_PAGE,
+      app_token: APP_TOKEN,
+      query: query,
+    };
+    const queryParams = new URLSearchParams(params);
+    const url = `${baseUrl}?${queryParams.toString()}`;
+
+    const resp = await fetch(url);
+    if (!resp.ok) {
       throw new Error(`API request failed: ${resp.status}, ${resp.statusText}`);
+    }
 
     for await (const chunk of resp.body) {
       const decoder = new TextDecoder("utf-8");
@@ -38,18 +59,8 @@ async function getPageData(page, results) {
     }
     console.log("Stream end.");
   } catch (err) {
-    console.log(err);
     throw new Error("Couldn't get fountains data from API.");
   }
-}
-
-async function getFountainsFromAPI() {
-  let results = [];
-  for (let page = 1; page <= PAGE_COUNT; page++) {
-    console.log(`Getting page ${page}`);
-    await getPageData(page, results);
-  }
-  return results;
 }
 
 export { getFountainsFromAPI };

@@ -4,6 +4,8 @@ const FIELDS = [
   "borough",
   "parkname",
   "location",
+  "extant",
+  "descrip",
   "dedicated",
   "architect",
   "categories",
