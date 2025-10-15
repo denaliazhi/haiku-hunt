@@ -1,5 +1,5 @@
 /**
- *  Load fountains data from API into SQL database.
+ *  One-time script to load fountains data from API into SQL database.
  */
 
 import { Client } from "pg";
@@ -15,27 +15,27 @@ const password = process.env.DATABASE_PWD;
 
 /* Create `fountains` table in SQL database and populate
    it with the data for each fountain */
-const query = `
-    DROP TABLE IF EXISTS fountains;
+const initialQuery = `
+  DROP TABLE IF EXISTS fountains;
 
-    CREATE TABLE IF NOT EXISTS fountains (
-        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        name VARCHAR ( 255 ) NOT NULL,
-        number INTEGER NOT NULL,
-        borough VARCHAR ( 13 ) NOT NULL,
-        parkname VARCHAR ( 255 ) DEFAULT 'N/A',
-        location VARCHAR ( 255 ) DEFAULT 'N/A',
-        extant CHAR(1),
-        dedicated VARCHAR( 255 ),
-        descrip VARCHAR( 255 ),
-        architect VARCHAR ( 255 ) DEFAULT 'N/A',
-        categories VARCHAR ( 255 ) DEFAULT 'N/A',
-        x DECIMAL,
-        y DECIMAL,
-        url VARCHAR ( 255 )
-    );
+  CREATE TABLE IF NOT EXISTS fountains (
+      id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      name VARCHAR ( 255 ) NOT NULL,
+      number INTEGER NOT NULL,
+      borough VARCHAR ( 13 ) NOT NULL,
+      parkname VARCHAR ( 255 ) DEFAULT 'N/A',
+      location VARCHAR ( 255 ) DEFAULT 'N/A',
+      extant CHAR(1),
+      dedicated VARCHAR( 255 ),
+      descrip VARCHAR( 255 ),
+      architect VARCHAR ( 255 ) DEFAULT 'N/A',
+      categories VARCHAR ( 255 ) DEFAULT 'N/A',
+      x DECIMAL,
+      y DECIMAL,
+      url VARCHAR ( 255 )
+  );
 
-    INSERT INTO fountains (${FIELDS.join(", ") + ", url"}) VALUES %L;
+  INSERT INTO fountains (${FIELDS.join(", ") + ", url"}) VALUES %L;
 `;
 
 /* Format data for all rows as comma-separated list */
@@ -81,7 +81,7 @@ async function main() {
   console.log("Data retrieved from API:", data.length);
 
   try {
-    await client.query(format(query, formatAllRows(data)));
+    await client.query(format(initialQuery, formatAllRows(data)));
     console.log("Table initialized");
 
     const { rows } = await client.query("SELECT COUNT(*) FROM fountains");
