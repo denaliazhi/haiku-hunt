@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fifty Fountains</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
   </head>
   <body>
     <%- include("./partials/sidebar.ejs"); %>
@@ -12,7 +12,46 @@
       <div class="page-header">
         <h1><%= title %></h1>
       </div>
-      <div class="card-details"><%= entry.name %></div>
+      <div class="card-details">
+        <p>
+          <a href="/search?borough=<%= entry.borough %>"
+            >&lt; <%= entry.borough %></a
+          >
+        </p>
+        <h1><%= entry.name %></h1>
+        <div class="categories">
+          <% entry.categories ? entry.categories.split(",").map(category => { %>
+          <p><%= category.trim() %></p>
+          <% }) : null %>
+        </div>
+        <div class="fountain-facts">
+          <div>
+            <h2>Location</h2>
+            <p>
+              <%= entry.parkname ? entry.parkname : entry.location ?
+              entry.location : "Not available" %>
+            </p>
+          </div>
+          <div>
+            <h2>Dedicated</h2>
+            <p><%= entry.dedicated ? entry.dedicated : "Not available" %></p>
+          </div>
+          <div>
+            <h2>Architect</h2>
+            <p><%= entry.architect ? entry.architect : "Not available" %></p>
+          </div>
+        </div>
+        <hr />
+        <h2>Haiku clues</h2>
+        <div class="clue-container">
+          <div class="clue-card"><p>+ Add a clue</p></div>
+          <% clues ? clues.map((clue) => { %>
+          <div class="clue-card">
+            <p><%= "blah" %></p>
+          </div>
+          <% }) : null %>
+        </div>
+      </div>
     </main>
   </body>
 </html>

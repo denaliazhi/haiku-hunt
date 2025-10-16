@@ -3,6 +3,7 @@
  */
 import pool from "./dbConnection.js";
 
+/* Get a fountain by its unique id */
 async function getFountain(id) {
   const sql = `
   SELECT *
@@ -13,8 +14,7 @@ async function getFountain(id) {
   return rows;
 }
 
-/* Get all distinct entries for fountains that 
-   still exist and are explicitly named 'fountain'*/
+/* Get all fountains */
 async function getAllEntries() {
   const sql = `
   SELECT *
@@ -24,6 +24,7 @@ async function getAllEntries() {
   return rows;
 }
 
+/* Get fountains located in a borough */
 async function filterByBorough(borough) {
   const sql = `
   SELECT *
@@ -34,27 +35,27 @@ async function filterByBorough(borough) {
   return rows;
 }
 
-async function filterByName(name) {
+/* Get fountains with a name matching 
+   (all or part of) the search term */
+async function filterByName(term) {
   const sql = `
   SELECT *
   FROM fountains 
   WHERE name ILIKE $1
   ;`;
-  const { rows } = await pool.query(sql, [`%${name}%`]);
+  const { rows } = await pool.query(sql, [`%${term}%`]);
   return rows;
 }
 
+/* Get all boroughs where fountains are located */
 async function getAllBoroughs() {
   const sql = `
-  SELECT borough
+  SELECT DISTINCT borough
   FROM fountains
-  GROUP BY borough
   ;`;
   const { rows } = await pool.query(sql);
   return rows;
 }
-
-// console.log(await filterByBorough("Manhattan"));
 
 export {
   getFountain,

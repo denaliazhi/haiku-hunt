@@ -9,6 +9,7 @@ const controller = {
         title: "Blah",
         entry: fountain[0],
         options: req.app.locals.boroughs,
+        clues: null,
       });
     } catch (err) {
       console.log(err);
