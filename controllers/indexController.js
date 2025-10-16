@@ -1,11 +1,22 @@
 import * as queries from "../data/dbQueries.js";
 
 const controller = {
-  get: async (req, res) => {
+  getAll: async (req, res) => {
     const results = await queries.getAllEntries();
-    const boroughs = await queries.getBoroughs();
+    const boroughs = await queries.getAllBoroughs();
     res.render("index", {
       title: "All Fountains",
+      entries: results,
+      options: boroughs,
+      totalResults: results.length,
+    });
+  },
+  getBorough: async (req, res) => {
+    const borough = req.params.borough;
+    const results = await queries.filterByBorough(borough);
+    const boroughs = await queries.getAllBoroughs();
+    res.render("index", {
+      title: `Fountains in ${borough}`,
       entries: results,
       options: boroughs,
       totalResults: results.length,

@@ -18,7 +18,20 @@ async function getAllEntries() {
   return rows;
 }
 
-async function getBoroughs() {
+async function filterByBorough(borough) {
+  const sql = `
+  SELECT *
+  FROM (
+    SELECT *, ROW_NUMBER() OVER(PARTITION BY number ORDER BY (SELECT NULL)) as dupeCount
+    FROM fountains 
+    WHERE extant = 'Y' AND name ILIKE '%fountain%'
+  ) WHERE dupeCount = 1 AND borough ILIKE '%${borough}%'
+  ;`;
+  const { rows } = await pool.query(sql);
+  return rows;
+}
+
+async function getAllBoroughs() {
   const sql = `
   SELECT borough
   FROM fountains
@@ -29,20 +42,6 @@ async function getBoroughs() {
   return rows;
 }
 
-async function tester() {
-  const sql = `
-  SELECT borough, COUNT(borough)
-  FROM (
-    SELECT *, ROW_NUMBER() OVER(PARTITION BY number ORDER BY (SELECT NULL)) as dupeCount
-    FROM fountains 
-    WHERE extant = 'Y' AND name ILIKE '%fountain%'
-  ) WHERE dupeCount = 1
-   GROUP BY borough
-  ;`;
-  const { rows } = await pool.query(sql);
-  return rows;
-}
+// console.log(await filterByBorough("Manhattan"));
 
-console.log(await tester());
-
-export { getAllEntries, getBoroughs };
+export { getAllEntries, filterByBorough, getAllBoroughs };
