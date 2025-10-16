@@ -2,8 +2,14 @@ import * as queries from "../data/dbQueries.js";
 
 const controller = {
   get: async (req, res) => {
-    const fountains = await queries.getAllEntries();
-    res.render("index", { title: "Testing", entries: fountains });
+    const results = await queries.getAllEntries();
+    const boroughs = await queries.getBoroughs();
+    res.render("index", {
+      title: "All Fountains",
+      entries: results,
+      options: boroughs,
+      totalResults: results.length,
+    });
   },
 };
 

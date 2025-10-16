@@ -7,11 +7,52 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <% entries.map(entry => { %>
-    <div>
-      <p><%= entry.borough %></p>
-      <p><%= entry.name %></p>
+    <div class="side-bar">
+      <header>
+        <div>
+          <div class="site-name">Fifty Fountains</div>
+          <p>A haiku hunt around New York City</p>
+        </div>
+        <nav>
+          <form action="/" method="GET">
+            <label for="search">Find a fountain</label>
+            <input type="text" name="search" />
+            <button type="submit" aria-label="search">&gt;</button>
+          </form>
+          <div>
+            <p>By borough</p>
+            <ul>
+              <% options.map(option => { %>
+              <a href="/<%= option.borough %>"
+                ><li><%= option.borough %></li></a
+              >
+              <% }); %>
+            </ul>
+          </div>
+          <a href="/">See all fountains</a>
+        </nav>
+      </header>
+      <footer>
+        <a href="/about">About this project</a>
+      </footer>
     </div>
-    <% }) %>
+    <main>
+      <div class="page-header">
+        <h1><%= title %></h1>
+        <p>
+          <%= totalResults %> <%= totalResults === 1 ? "result" : "results"%>
+        </p>
+      </div>
+      <div class="card-container">
+        <% entries.map(entry => { %>
+        <div class="card">
+          <a href="/<%= entry.borough %>/<%= entry.id %>">
+            <p><%= entry.borough %></p>
+            <h2><%= entry.name %></h2>
+          </a>
+        </div>
+        <% }) %>
+      </div>
+    </main>
   </body>
 </html>

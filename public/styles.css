@@ -3,3 +3,169 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("DMSans.ttf");
+}
+@font-face {
+  font-family: "Silkscreen";
+  src: url("Silkscreen.ttf");
+}
+
+:root {
+  --accent: #abbad5;
+  --background: #f5f8fc;
+  --rounded: 0.35rem;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: "DM Sans", system-ui, sans-serif;
+
+  display: flex;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+/* Sidebar Elements */
+
+.side-bar {
+  max-width: 17.1rem;
+  padding: 3rem;
+
+  background-color: var(--background);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.site-name {
+  font-family: "Silkscreen";
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+header > div {
+  margin-bottom: 2rem;
+}
+
+header form input {
+  font-size: 1rem;
+  font-family: "DM Sans";
+  width: 100%;
+  padding: 0.3rem 1.8rem 0.3rem 0.7rem;
+  margin-top: 0.7rem;
+
+  background: white;
+  border: none;
+  border-radius: var(--rounded);
+
+  box-shadow: inset 0 3.65px 3.65px 0 var(--shadow);
+}
+
+header form {
+  position: relative;
+}
+
+header form button {
+  position: absolute;
+  height: 1.8rem;
+  width: 1.8rem;
+
+  background-color: var(--accent);
+  border-radius: 50%;
+
+  bottom: 1px;
+  right: -0.4rem;
+}
+
+header form button:hover {
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+nav ul {
+  margin: 0.7rem 0 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+nav li {
+  text-align: center;
+  list-style: none;
+
+  padding: 0.3rem;
+
+  border-radius: var(--rounded);
+  background-color: white;
+
+  box-shadow: 0 4px 4px 0 var(--shadow);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+nav li:hover {
+  cursor: pointer;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Search Result Elements */
+
+main {
+  width: 100%;
+  padding: 3rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-family: "Silkscreen", "Courier New", Courier, monospace;
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 1rem;
+  border-radius: var(--rounded);
+  background-color: var(--background);
+}
+
+.card p:first-of-type {
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  margin-top: 0.2rem;
+}
