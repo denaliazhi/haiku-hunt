@@ -20,19 +20,19 @@ const initialQuery = `
 
   CREATE TABLE IF NOT EXISTS fountains (
       id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-      name VARCHAR ( 255 ) NOT NULL,
+      name VARCHAR(255) NOT NULL,
       number INTEGER NOT NULL,
-      borough VARCHAR ( 13 ) NOT NULL,
-      parkname VARCHAR ( 255 ) DEFAULT 'N/A',
-      location VARCHAR ( 255 ) DEFAULT 'N/A',
+      borough VARCHAR(13) NOT NULL,
+      parkname VARCHAR(255) DEFAULT 'N/A',
+      location VARCHAR (255) DEFAULT 'N/A',
       extant CHAR(1),
-      dedicated VARCHAR( 255 ),
-      descrip VARCHAR( 255 ),
-      architect VARCHAR ( 255 ) DEFAULT 'N/A',
-      categories VARCHAR ( 255 ) DEFAULT 'N/A',
+      dedicated VARCHAR(255),
+      descrip VARCHAR(255),
+      architect VARCHAR(255) DEFAULT 'N/A',
+      categories VARCHAR(255) DEFAULT 'N/A',
       x DECIMAL,
       y DECIMAL,
-      url VARCHAR ( 255 )
+      url VARCHAR(255)
   );
 
   INSERT INTO fountains (${FIELDS.join(", ") + ", url"}) VALUES %L;
@@ -97,16 +97,16 @@ async function main() {
 
   try {
     await client.query(format(initialQuery, formatAllRows(data)));
-    console.log("Table initialized");
+    console.log("Table initialized.");
 
     await client.query(filterQuery);
-    console.log("Table filtered down to relevant rows");
+    console.log("Table filtered down to relevant rows.");
   } catch (err) {
     console.log(err);
   }
 
   await client.end();
-  console.log("Done");
+  console.log("Done.");
 }
 
 main();
