@@ -2,34 +2,33 @@ import * as queries from "../data/dbQueries.js";
 
 const controller = {
   getAll: async (req, res) => {
-    const results = await queries.getAllEntries();
-    const boroughs = await queries.getAllBoroughs();
+    const allFountains = await queries.getAllEntries();
     res.render("index", {
       title: "All Fountains",
-      entries: results,
-      options: boroughs,
-      totalResults: results.length,
+      entries: allFountains,
+      totalResults: allFountains.length,
+      options: req.app.locals.boroughs,
     });
   },
   getSearch: async (req, res) => {
-    let results, title;
+    let matchedFountains, title;
 
+    // Determine SQL query based on search parameter
     if (req.query.name) {
       const name = req.query.name;
-      results = await queries.filterByName(name);
+      matchedFountains = await queries.filterByName(name);
       title = `Fountains with '${name}' in name`;
     } else if (req.query.borough) {
       let borough = req.query.borough;
-      results = await queries.filterByBorough(borough);
+      matchedFountains = await queries.filterByBorough(borough);
       title = `Fountains in ${borough}`;
     }
 
-    const boroughs = await queries.getAllBoroughs();
     res.render("index", {
       title: title,
-      entries: results,
-      options: boroughs,
-      totalResults: results.length,
+      entries: matchedFountains,
+      totalResults: matchedFountains.length,
+      options: req.app.locals.boroughs,
     });
   },
 };
