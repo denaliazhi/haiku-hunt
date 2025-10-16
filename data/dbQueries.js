@@ -25,9 +25,22 @@ async function filterByBorough(borough) {
     SELECT *, ROW_NUMBER() OVER(PARTITION BY number ORDER BY (SELECT NULL)) as dupeCount
     FROM fountains 
     WHERE extant = 'Y' AND name ILIKE '%fountain%'
-  ) WHERE dupeCount = 1 AND borough ILIKE '%${borough}%'
+  ) WHERE dupeCount = 1 AND borough ILIKE $1
   ;`;
-  const { rows } = await pool.query(sql);
+  const { rows } = await pool.query(sql, [`%${borough}%`]);
+  return rows;
+}
+
+async function filterByName(name) {
+  const sql = `
+  SELECT *
+  FROM (
+    SELECT *, ROW_NUMBER() OVER(PARTITION BY number ORDER BY (SELECT NULL)) as dupeCount
+    FROM fountains 
+    WHERE extant = 'Y' AND name ILIKE '%fountain%'
+  ) WHERE dupeCount = 1 AND name ILIKE $1
+  ;`;
+  const { rows } = await pool.query(sql, [`%${name}%`]);
   return rows;
 }
 
@@ -44,4 +57,4 @@ async function getAllBoroughs() {
 
 // console.log(await filterByBorough("Manhattan"));
 
-export { getAllEntries, filterByBorough, getAllBoroughs };
+export { getAllEntries, filterByBorough, filterByName, getAllBoroughs };
