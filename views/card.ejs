@@ -15,16 +15,7 @@
           <%= totalResults %> <%= totalResults === 1 ? "result" : "results"%>
         </p>
       </div>
-      <div class="card-container">
-        <% entries.map(entry => { %>
-        <div class="card">
-          <a href="/<%= entry.borough %>/<%= entry.id %>">
-            <p><%= entry.borough %></p>
-            <h2><%= entry.name %></h2>
-          </a>
-        </div>
-        <% }) %>
-      </div>
+      <div class="card-details"></div>
     </main>
   </body>
 </html>

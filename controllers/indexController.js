@@ -12,23 +12,21 @@ const controller = {
     });
   },
   getSearch: async (req, res) => {
-    const name = req.query.name;
-    console.log(name);
-    const results = await queries.filterByName(name);
+    let results, title;
+
+    if (req.query.name) {
+      const name = req.query.name;
+      results = await queries.filterByName(name);
+      title = `Fountains with '${name}' in name`;
+    } else if (req.query.borough) {
+      let borough = req.query.borough;
+      results = await queries.filterByBorough(borough);
+      title = `Fountains in ${borough}`;
+    }
+
     const boroughs = await queries.getAllBoroughs();
     res.render("index", {
-      title: `Fountains with '${name}' in name`,
-      entries: results,
-      options: boroughs,
-      totalResults: results.length,
-    });
-  },
-  getBorough: async (req, res) => {
-    const borough = req.params.borough;
-    const results = await queries.filterByBorough(borough);
-    const boroughs = await queries.getAllBoroughs();
-    res.render("index", {
-      title: `Fountains in ${borough}`,
+      title: title,
       entries: results,
       options: boroughs,
       totalResults: results.length,
