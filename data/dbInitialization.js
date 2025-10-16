@@ -38,6 +38,21 @@ const initialQuery = `
   INSERT INTO fountains (${FIELDS.join(", ") + ", url"}) VALUES %L;
 `;
 
+/* Delete irrelevant rows from `fountains` table
+   that couldn't be filtered out of initial API call */
+const filterQuery = `
+  WITH dupes AS (
+    SELECT *, row_number() OVER(PARTITION BY number ORDER BY id) AS dupeRank
+    FROM fountains
+  )
+  DELETE 
+  FROM fountains 
+  WHERE id IN 
+  ( SELECT id 
+    FROM dupes 
+    WHERE NOT (dupeRank = 1 AND extant = 'Y' AND name ILIKE '%fountain%'));
+`;
+
 /* Format data for all rows as comma-separated list */
 function formatAllRows(data) {
   return data.map((entry) => formatRow(entry));
@@ -84,8 +99,8 @@ async function main() {
     await client.query(format(initialQuery, formatAllRows(data)));
     console.log("Table initialized");
 
-    const { rows } = await client.query("SELECT COUNT(*) FROM fountains");
-    console.log("Rows in table:", rows[0].count);
+    await client.query(filterQuery);
+    console.log("Table filtered down to relevant rows");
   } catch (err) {
     console.log(err);
   }
