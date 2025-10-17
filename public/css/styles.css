@@ -42,6 +42,11 @@ button {
   border: none;
 }
 
+.small-text {
+  font-size: 0.8rem;
+  color: rgb(var(--accent));
+}
+
 /* Sidebar Elements */
 
 .side-bar {
@@ -163,9 +168,8 @@ main {
   background-color: rgb(var(--background));
 }
 
-.card p:first-of-type {
-  font-size: 0.8rem;
-  color: rgb(var(--accent));
+.card .clue-card {
+  margin-top: 0.8rem;
 }
 
 .card h2 {

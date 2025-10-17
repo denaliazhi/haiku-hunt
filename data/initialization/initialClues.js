@@ -17,7 +17,7 @@ const clues = [
     202,
     "Denalia Z.",
     "In its off season,",
-    "it is a training ground for",
+    "it's a training ground for the",
     "local skateboarders.",
   ],
 ];

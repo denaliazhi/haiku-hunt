@@ -6,15 +6,11 @@ import {
   englishRecommendedTransformers as recommended,
 } from "obscenity";
 
-import { getFountainClues } from "../data/queries/dbClues.js";
+import { addClue, getFountainClues } from "../data/queries/dbClues.js";
 import { getFountain } from "../data/queries/dbFountains.js";
 
 const validateClue = [
   body("*")
-    // Sanitize all fields
-    .trim()
-    .escape()
-    .customSanitizer((value) => value.replace(/\s+/g, " "))
     // Check all fields for inappropriate words
     .custom((value) => {
       const matcher = new RegExpMatcher({
@@ -36,7 +32,6 @@ const validateClue = [
       }
       return true;
     }),
-  // TO DO: Check line contains valid English words
 
   body("author")
     .isLength({ min: 2, max: 20 })
@@ -77,6 +72,11 @@ const validateClue = [
       }
       return true;
     }),
+
+  body("*")
+    // Sanitize all fields
+    .trim()
+    .customSanitizer((value) => value.replace(/\s+/g, " ")),
 ];
 
 const controller = {
@@ -115,9 +115,7 @@ const controller = {
 
       // If valid, update clues table with new clue for fountain id
       if (errors.isEmpty()) {
-        console.log("Valid data: ", matchedData(req));
-        // updateFountain(req.params.id, matchedData(req));
-
+        addClue([req.params.id, ...Object.values(matchedData(req))]);
         return res.redirect(`/fountain/${id}`);
       }
 

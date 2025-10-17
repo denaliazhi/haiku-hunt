@@ -18,7 +18,7 @@ const initialQuery = `
     DROP TABLE IF EXISTS clues;
 
     CREATE TABLE IF NOT EXISTS clues (
-        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        clueId INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         fountainId INTEGER REFERENCES fountains(id),
         author VARCHAR(20) DEFAULT 'Anonymous',
         haiku_line_1 VARCHAR(255) NOT NULL,

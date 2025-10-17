@@ -7,7 +7,7 @@ import {
 const controller = {
   getAll: async (req, res) => {
     const allFountains = await getAllEntries();
-    res.render("index", {
+    res.render("main", {
       title: "All Fountains",
       entries: allFountains,
       totalResults: allFountains.length,
@@ -28,7 +28,7 @@ const controller = {
       title = `Fountains in ${borough}`;
     }
 
-    res.render("index", {
+    res.render("main", {
       title: title,
       entries: matches,
       totalResults: matches.length,
