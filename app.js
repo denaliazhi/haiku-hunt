@@ -1,7 +1,7 @@
 import express from "express";
 import url from "url";
 import path from "path";
-import searchRouter from "./routers/searchRouter.js";
+import mainRouter from "./routers/mainRouter.js";
 import fountainRouter from "./routers/fountainRouter.js";
 import initialConfig from "./config.js";
 
@@ -16,7 +16,7 @@ app.set("view engine", "ejs");
 app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", searchRouter);
+app.use("/", mainRouter);
 app.use("/fountain", fountainRouter);
 
 app.use((err, req, res, next) => {

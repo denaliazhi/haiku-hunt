@@ -1,4 +1,4 @@
-import { getAllBoroughs } from "./data/dbQueries.js";
+import { getAllBoroughs } from "./data/queries/dbFountains.js";
 
 async function initialConfig(app) {
   try {

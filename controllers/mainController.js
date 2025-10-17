@@ -2,7 +2,7 @@ import {
   getAllEntries,
   filterByName,
   filterByBorough,
-} from "../data/dbQueries.js";
+} from "../data/queries/dbFountains.js";
 
 const controller = {
   getAll: async (req, res) => {

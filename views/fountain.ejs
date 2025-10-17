@@ -12,7 +12,7 @@
       <div class="page-header">
         <h1><%= title %></h1>
       </div>
-      <div class="card-details">
+      <article class="card-details">
         <p>
           <a href="/search?borough=<%= entry.borough %>"
             ><%= entry.borough %></a
@@ -44,14 +44,31 @@
         <hr />
         <h2>Haiku clues</h2>
         <div class="clue-container">
-          <div class="clue-card"><p>+ Add a clue</p></div>
+          <a href="/fountain/<%= entry.id %>/add">
+            <div class="clue-card"><p>+ Add a clue</p></div>
+          </a>
           <% clues ? clues.map((clue) => { %>
           <div class="clue-card">
-            <p><%= "blah" %></p>
+            <div class="haiku">
+              <p><%= clue.haiku_line_1 %></p>
+              <p><%= clue.haiku_line_2 %></p>
+              <p><%= clue.haiku_line_3 %></p>
+            </div>
+            <div class="clue-details">
+              <div class="votes">
+                <button>up</button>
+                <p><%= clue.votes %></p>
+                <button>down</button>
+              </div>
+              <p>
+                <%= clue.author %> on <%= new
+                Date(clue.submitted).toLocaleDateString("en-US") %>
+              </p>
+            </div>
           </div>
           <% }) : null %>
         </div>
-      </div>
+      </article>
     </main>
   </body>
 </html>

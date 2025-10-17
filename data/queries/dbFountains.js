@@ -1,7 +1,7 @@
 /**
- * Queries to interact with SQL database.
+ * Queries to interact with fountains table in SQL database.
  */
-import pool from "./dbConnection.js";
+import pool from "../dbConnection.js";
 
 /* Get a fountain by its unique id */
 async function getFountain(id) {
