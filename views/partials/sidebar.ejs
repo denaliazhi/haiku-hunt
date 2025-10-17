@@ -13,7 +13,7 @@
       <div>
         <p>By borough</p>
         <ul>
-          <% options.map(option => { %>
+          <% options.forEach(option => { %>
           <a href="/search?borough=<%= option.borough %>"
             ><li><%= option.borough %></li></a
           >

@@ -25,27 +25,57 @@
                     type="text"
                     id="line-1"
                     name="line-1"
+                    minlength="5"
+                    maxlength="50"
                     required
+                    placeholder="People come and go"
+                    value="<%= formEntry ? formEntry['line-1']: null %>"
                     />
                     <label for="line-2">Line 2<span>7 syllables</span></label>
                     <input
                     type="text"
                     id="line-2"
                     name="line-2"
+                    minlength="5"
+                    maxlength="50"
                     required
+                    placeholder="in the place that I reside."
+                    value="<%= formEntry ? formEntry['line-2']: null %>"
                     />
                     <label for="line-3">Line 3<span>5 syllables</span></label>
                     <input
                     type="text"
                     id="line-3"
                     name="line-3"
+                    minlength="5"
+                    maxlength="50"
                     required
+                    placeholder="Will you come find me?"
+                    value="<%= formEntry ? formEntry['line-3']: null %>"
                     />
                 </div>
             </div>
             <div id="author-field">
                 <label for="author">Author</label>
-                <input type="text" id="author" name="author" placeholder="Anonymous"/>
+                <input 
+                type="text"
+                id="author"
+                name="author"
+                minlength="2"
+                maxlength="20"
+                required
+                placeholder="Matsuo B."
+                value="<%= formEntry ? formEntry['author']: null %>"
+                />
+            </div>
+            <div class="errors">
+                <% if (errors) { %>
+                    <ul>
+                        <% errors.forEach(error => {%>
+                            <li><%= error.msg %></li>
+                        <% }); %>
+                    </ul>
+                <% } %>
             </div>
             <button type="submit">Publish</button>
       </article>
