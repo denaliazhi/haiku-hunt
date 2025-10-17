@@ -55,15 +55,18 @@
               <p><%= clue.haiku_line_3 %></p>
             </div>
             <div class="clue-details">
-              <div class="votes">
-                <button id="up-vote" aria-label="Upvote this haiku">
+              <!-- <div class="votes">
+                <button 
+                onclick=""
+                id="up-vote" 
+                aria-label="Upvote this haiku">
                   <span>+</span>
                 </button>
                 <p><%= clue.votes %></p>
                 <button id="down-vote" aria-label="Downvote this haiku">
                   <span>-</span>
                 </button>
-              </div>
+              </div> -->
               <p>
                 <%= clue.author %> on <%= new
                 Date(clue.submitted).toLocaleDateString("en-US") %>
@@ -74,6 +77,6 @@
         </div>
       </article>
     </main>
-    <!-- <script src="voteHandler.js"></script> -->
+    <!-- <script type="module" src="../eventHandlers/voteHandler.js"></script> -->
   </body>
 </html>

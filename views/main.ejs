@@ -20,7 +20,7 @@
         <div class="card">
           <a href="/fountain/<%= entry.id %>">
             <p class="small-text"><%= entry.borough %></p>
-            <h2><%= entry.name %></h2>
+            <h2><%= obfuscate(entry.name) %></h2>
             <% if (entry.haiku_line_1) { %>
             <div class="clue-card">
               <div>

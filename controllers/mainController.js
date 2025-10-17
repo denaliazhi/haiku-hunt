@@ -5,6 +5,7 @@ import {
 } from "../data/queries/dbFountains.js";
 
 const controller = {
+  /* Render main page with all fountains */
   getAll: async (req, res) => {
     const allFountains = await getAllEntries();
     res.render("main", {
@@ -12,8 +13,11 @@ const controller = {
       entries: allFountains,
       totalResults: allFountains.length,
       options: req.app.locals.boroughs,
+      obfuscate: obfuscate,
     });
   },
+
+  /* Render main page with results after filtering fountains*/
   getSearch: async (req, res) => {
     let matches, title;
 
@@ -33,8 +37,25 @@ const controller = {
       entries: matches,
       totalResults: matches.length,
       options: req.app.locals.boroughs,
+      obfuscate: obfuscate,
     });
   },
 };
+
+/* Helper function to hide fountain name except for 
+   first letter of each word*/
+function obfuscate(name) {
+  const dashed = name
+    .split(" ")
+    .map((word) => {
+      if (word.match(/fountain/i)) {
+        return word;
+      } else {
+        return word[0] + word.slice(1).replace(/./g, "-");
+      }
+    })
+    .join(" ");
+  return dashed;
+}
 
 export default controller;

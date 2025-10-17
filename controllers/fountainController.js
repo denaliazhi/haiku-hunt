@@ -80,6 +80,7 @@ const validateClue = [
 ];
 
 const controller = {
+  /* Render fountain details page */
   getDetails: async (req, res) => {
     const id = req.params.id;
     try {
@@ -97,6 +98,7 @@ const controller = {
     }
   },
 
+  /* Render form to add a haiku clue */
   getAddClue: (req, res) => {
     res.render("clueForm", {
       title: "Add a Haiku Clue", // TO DO: change
@@ -107,6 +109,7 @@ const controller = {
     });
   },
 
+  /* Handle submission of new haiku clue */
   postAddClue: [
     validateClue,
     async (req, res) => {
@@ -132,10 +135,3 @@ const controller = {
 };
 
 export default controller;
-
-// {
-//   'line-1': 'I am a cat',
-//   'line-2': "No I'm not",
-//   'line-3': 'Yes',
-//   author: 'Cat'
-// }
