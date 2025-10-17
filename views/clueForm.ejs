@@ -12,35 +12,41 @@
       <div class="page-header">
         <h1><%= title %></h1>
       </div>
-      <article class="card-details">
+      <article class="card-details clue-form">
+        <a class="back-btn" href="/fountain/<%= id %>">&lt; Back</a>
         <h1>Add a clue</h1>
         <form action="/fountain/<%= id %>/add" method="POST">
-            <fieldset>
-                <legend>Haiku</legend>
-                <label for="line-1">Line 1<span>5 syllables</span></label>
-                <input
-                type="text"
-                id="line-1"
-                name="line-1"
-                required
-                />
-                <label for="line-2">Line 2<span>7 syllables</span></label>
-                <input
-                type="text"
-                id="line-2"
-                name="line-2"
-                required
-                />
-                <label for="line-3">Line 3<span>5 syllables</span></label>
-                <input
-                type="text"
-                id="line-3"
-                name="line-3"
-                required
-                />
-            </fieldset>
-            <label for="author">Author</label>
-            <input type="text" id="author" name="author" placeholder="Anonymous"/>
+            <div class="haiku">
+                <h2>Haiku</h2>
+                <!-- <p>Write a poem that can guide others to this fountain.</p> -->
+                <div>
+                    <label for="line-1">Line 1<span>5 syllables</span></label>
+                    <input
+                    type="text"
+                    id="line-1"
+                    name="line-1"
+                    required
+                    />
+                    <label for="line-2">Line 2<span>7 syllables</span></label>
+                    <input
+                    type="text"
+                    id="line-2"
+                    name="line-2"
+                    required
+                    />
+                    <label for="line-3">Line 3<span>5 syllables</span></label>
+                    <input
+                    type="text"
+                    id="line-3"
+                    name="line-3"
+                    required
+                    />
+                </div>
+            </div>
+            <div id="author-field">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author" placeholder="Anonymous"/>
+            </div>
             <button type="submit">Publish</button>
       </article>
     </main>
