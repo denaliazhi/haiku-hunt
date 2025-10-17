@@ -15,14 +15,16 @@
 
 :root {
   --accent: 171, 186, 213;
+  --dark-main: 69, 76, 91;
   --background: 245, 248, 252;
-  --rounded: 0.35rem;
+  --rounded: 0.6rem;
   --extra-rounded: 0.8rem;
   --shadow: 0, 0, 0;
 }
 
 body {
   font-family: "DM Sans", system-ui, sans-serif;
+  color: rgb(var(--dark-main));
 
   display: flex;
 }
@@ -232,23 +234,56 @@ main {
 
 .clue-container {
   margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1.3rem;
 }
 
 .clue-card {
-  width: 19.5rem;
   height: 9rem;
-  padding: 1rem;
+  padding: 1.3rem;
 
+  border: 2px solid transparent;
   border-radius: var(--rounded);
-  border: 2px dashed rgb(var(--accent), 0.4);
+  background-color: rgba(var(--accent), 0.4);
 
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.clue-card p {
+.clue-card:not(.empty):hover {
+  cursor: pointer;
+  border: 2px solid rgb(var(--accent));
+}
+
+.clue-card.empty {
+  justify-content: center;
+
   text-align: center;
   color: rgb(var(--accent));
-  margin: auto;
+
+  border: 2px dashed rgb(var(--accent), 0.4);
+  background-color: transparent;
+}
+
+.clue-card.empty:hover {
+  background-color: rgba(var(--accent), 0.1);
+  box-shadow: none;
+}
+
+.clue-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.clue-details p:last-of-type {
+  font-size: 0.8rem;
+}
+
+.votes {
+  display: flex;
+  gap: 0.3rem;
 }
 
 /* Clue Form Elements */
@@ -277,12 +312,12 @@ main {
   gap: 1.5rem;
 }
 
-.haiku,
+.haiku-fields,
 #author-field {
   max-width: 35rem;
 }
 
-.haiku {
+.haiku-fields {
   padding: 2rem;
   margin: 0 auto;
 
@@ -290,19 +325,19 @@ main {
   border-radius: var(--extra-rounded);
 }
 
-.haiku h2 {
+.haiku-fields h2 {
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
-.haiku > div {
+.haiku-fields > div {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.haiku > div span {
+.haiku-fields > div span {
   display: block;
 
   font-size: 0.8rem;
@@ -311,7 +346,7 @@ main {
   margin-right: 1rem;
 }
 
-.haiku > div input,
+.haiku-fields > div input,
 #author {
   flex-grow: 1;
   width: 80%;

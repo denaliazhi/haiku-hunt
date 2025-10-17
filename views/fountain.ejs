@@ -45,20 +45,24 @@
         <h2>Haiku clues</h2>
         <div class="clue-container">
           <a href="/fountain/<%= entry.id %>/add">
-            <div class="clue-card"><p>+ Add a clue</p></div>
+            <div class="clue-card empty"><p>+ Add a clue</p></div>
           </a>
           <% clues ? clues.map((clue) => { %>
           <div class="clue-card">
-            <div class="haiku">
+            <div>
               <p><%= clue.haiku_line_1 %></p>
               <p><%= clue.haiku_line_2 %></p>
               <p><%= clue.haiku_line_3 %></p>
             </div>
             <div class="clue-details">
               <div class="votes">
-                <button>up</button>
+                <button id="up-vote" aria-label="Upvote this haiku">
+                  <span>+</span>
+                </button>
                 <p><%= clue.votes %></p>
-                <button>down</button>
+                <button id="down-vote" aria-label="Downvote this haiku">
+                  <span>-</span>
+                </button>
               </div>
               <p>
                 <%= clue.author %> on <%= new
@@ -70,5 +74,6 @@
         </div>
       </article>
     </main>
+    <!-- <script src="voteHandler.js"></script> -->
   </body>
 </html>
