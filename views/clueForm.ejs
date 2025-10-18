@@ -10,16 +10,14 @@
     <%- include("./partials/sidebar.ejs"); %>
     <main>
       <div class="page-header">
-        <h1><%= title %></h1>
+        <h1>Add Your Clue</h1>
       </div>
       <article class="card-details clue-form">
-        <a class="back-btn" href="/fountain/<%= id %>">&lt; Back</a>
-        <h1>Add a clue</h1>
-        <form action="/fountain/<%= id %>/add" method="POST">
+        <a class="back-btn" href="<%= backLink %>">&lt; Back</a>
+        <h1>Write a haiku</h1>
+        <form action="<%= backLink %>/add" method="POST">
+            <p>Guide others to this landmark through a 17 syllable poem.</p>
             <div class="haiku-fields">
-                <h2>Haiku</h2>
-                <!-- <p>Write a poem that can guide others to this fountain.</p> -->
-                <div>
                     <label for="line-1">Line 1<span>5 syllables</span></label>
                     <input
                     type="text"
@@ -28,7 +26,7 @@
                     minlength="5"
                     maxlength="50"
                     required
-                    placeholder="People come and go"
+                    placeholder="Time seems to stand still"
                     value="<%= formEntry ? formEntry['line-1']: null %>"
                     />
                     <label for="line-2">Line 2<span>7 syllables</span></label>
@@ -39,7 +37,7 @@
                     minlength="5"
                     maxlength="50"
                     required
-                    placeholder="in the place that I reside."
+                    placeholder="in this place which I reside."
                     value="<%= formEntry ? formEntry['line-2']: null %>"
                     />
                     <label for="line-3">Line 3<span>5 syllables</span></label>
@@ -50,10 +48,9 @@
                     minlength="5"
                     maxlength="50"
                     required
-                    placeholder="Will you come find me?"
+                    placeholder="I will wait for you."
                     value="<%= formEntry ? formEntry['line-3']: null %>"
                     />
-                </div>
             </div>
             <div id="author-field">
                 <label for="author">Author</label>
@@ -68,15 +65,15 @@
                 value="<%= formEntry ? formEntry['author']: null %>"
                 />
             </div>
-            <div class="errors">
                 <% if (errors) { %>
+            <div class="errors">
                     <ul>
                         <% errors.forEach(error => {%>
                             <li><%= error.msg %></li>
                         <% }); %>
                     </ul>
-                <% } %>
             </div>
+            <% } %>
             <button type="submit">Publish</button>
       </article>
     </main>

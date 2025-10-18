@@ -17,7 +17,7 @@ app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", mainRouter);
-app.use("/fountain", fountainRouter);
+app.use("/:group", fountainRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

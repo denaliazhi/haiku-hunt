@@ -87,7 +87,7 @@ const controller = {
       const fountain = await getFountain(id);
       const clues = await getFountainClues(id);
       res.render("fountain", {
-        title: "Blah",
+        title: "The Deets",
         entry: fountain[0],
         options: req.app.locals.boroughs,
         clues: clues,
@@ -100,12 +100,13 @@ const controller = {
 
   /* Render form to add a haiku clue */
   getAddClue: (req, res) => {
+    const backLink = `${req.baseUrl}/${req.params.id}`;
     res.render("clueForm", {
-      title: "Add a Haiku Clue", // TO DO: change
       options: req.app.locals.boroughs,
       id: req.params.id,
       errors: null,
       formEntry: null,
+      backLink: backLink,
     });
   },
 
@@ -114,21 +115,22 @@ const controller = {
     validateClue,
     async (req, res) => {
       const id = req.params.id;
+      const backLink = `${req.baseUrl}/${req.params.id}`;
       const errors = validationResult(req);
 
       // If valid, update clues table with new clue for fountain id
       if (errors.isEmpty()) {
-        addClue([req.params.id, ...Object.values(matchedData(req))]);
-        return res.redirect(`/fountain/${id}`);
+        await addClue([req.params.id, ...Object.values(matchedData(req))]);
+        return res.redirect(backLink);
       }
 
       // If invalid, re-render form with errors and previously entered data
       res.status(400).render("clueForm", {
-        title: "Add a Haiku Clue", // TO DO: change
         options: req.app.locals.boroughs,
         id: id,
         errors: errors.array(),
         formEntry: req.body,
+        backLink: backLink,
       });
     },
   ],

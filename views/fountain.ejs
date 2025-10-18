@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fifty Fountains</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
-  </head>
+  <%- include("./partials/head.ejs") %>
   <body>
     <%- include("./partials/sidebar.ejs"); %>
     <main>
@@ -14,9 +9,7 @@
       </div>
       <article class="card-details">
         <p>
-          <a href="/search?borough=<%= entry.borough %>"
-            ><%= entry.borough %></a
-          >
+          <a href="/<%= entry.borough %>"><%= entry.borough %></a>
         </p>
         <h1><%= entry.name %></h1>
         <div class="categories">
@@ -44,7 +37,7 @@
         <hr />
         <h2>Haiku clues</h2>
         <div class="clue-container">
-          <a href="/fountain/<%= entry.id %>/add">
+          <a href="/<%= entry.borough %>/<%= entry.id %>/add">
             <div class="clue-card empty"><p>+ Add a clue</p></div>
           </a>
           <% clues ? clues.map((clue) => { %>

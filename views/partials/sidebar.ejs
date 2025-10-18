@@ -1,12 +1,12 @@
 <div class="side-bar">
   <header>
     <div>
-      <div class="site-name">Fifty Fountains</div>
-      <p>A haiku hunt around New York City</p>
+      <div class="site-name">Haiku Hunt</div>
+      <p>A poetic search for landmarks in NYC</p>
     </div>
     <nav>
       <form action="/search" method="GET">
-        <label for="name">Find a fountain</label>
+        <label for="name">Find a landmark</label>
         <input type="text" name="name" />
         <button type="submit" aria-label="search">&gt;</button>
       </form>
@@ -14,13 +14,11 @@
         <p>By borough</p>
         <ul>
           <% options.forEach(option => { %>
-          <a href="/search?borough=<%= option.borough %>"
-            ><li><%= option.borough %></li></a
-          >
+          <a href="/<%= option.borough %>"><li><%= option.borough %></li></a>
           <% }); %>
         </ul>
       </div>
-      <a href="/">See all fountains</a>
+      <a href="/">See all landmarks</a>
     </nav>
   </header>
   <footer>

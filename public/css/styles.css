@@ -327,6 +327,10 @@ main {
 
   border: 2px solid rgb(var(--accent), 0.4);
   border-radius: var(--extra-rounded);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .haiku-fields h2 {
@@ -335,13 +339,7 @@ main {
   margin-bottom: 1rem;
 }
 
-.haiku-fields > div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.haiku-fields > div span {
+.haiku-fields span {
   display: block;
 
   font-size: 0.8rem;
@@ -350,7 +348,7 @@ main {
   margin-right: 1rem;
 }
 
-.haiku-fields > div input,
+.haiku-fields input,
 #author {
   flex-grow: 1;
   width: 80%;

@@ -7,37 +7,41 @@ import {
 const controller = {
   /* Render main page with all fountains */
   getAll: async (req, res) => {
+    const url = req.url;
+
     const allFountains = await getAllEntries();
     res.render("main", {
-      title: "All Fountains",
+      title: "All Landmarks",
       entries: allFountains,
-      totalResults: allFountains.length,
       options: req.app.locals.boroughs,
       obfuscate: obfuscate,
+      cardUrl: url,
     });
   },
 
   /* Render main page with results after filtering fountains*/
   getSearch: async (req, res) => {
     let matches, title;
+    const url = req.url;
 
-    // Determine SQL query based on search parameter
-    if (req.query.name) {
-      const name = req.query.name;
-      matches = await filterByName(name);
-      title = `Fountains with '${name}' in name`;
-    } else if (req.query.borough) {
-      let borough = req.query.borough;
-      matches = await filterByBorough(borough);
-      title = `Fountains in ${borough}`;
+    // Determine SQL query based on url parameter
+    const param = req.params.group;
+    if (param.match(/search/i)) {
+      const searchTerm = req.query.name;
+      console.log("Search term:", searchTerm);
+      matches = await filterByName(searchTerm);
+      title = `Landmarks with '${searchTerm}' in name`;
+    } else {
+      matches = await filterByBorough(param);
+      title = `Landmarks in ${param}`;
     }
 
     res.render("main", {
       title: title,
       entries: matches,
-      totalResults: matches.length,
       options: req.app.locals.boroughs,
       obfuscate: obfuscate,
+      cardUrl: url,
     });
   },
 };

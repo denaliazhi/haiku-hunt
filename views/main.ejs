@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fifty Fountains</title>
-    <link rel="stylesheet" href="/css/styles.css" />
-  </head>
+  <%- include("./partials/head.ejs") %>
   <body>
     <%- include("./partials/sidebar.ejs"); %>
     <main>
       <div class="page-header">
         <h1><%= title %></h1>
         <p>
-          <%= totalResults %> <%= totalResults === 1 ? "result" : "results"%>
+          <%= entries.length %> <%= entries.length === 1 ? "result" :
+          "results"%>
         </p>
       </div>
       <div class="card-container">
         <% entries.map(entry => { %>
         <div class="card">
-          <a href="/fountain/<%= entry.id %>">
+          <a href="<%= entry.borough %>/<%= entry.id %>">
             <p class="small-text"><%= entry.borough %></p>
             <h2><%= obfuscate(entry.name) %></h2>
             <% if (entry.haiku_line_1) { %>
@@ -29,6 +25,8 @@
                 <p><%= entry.haiku_line_3 %></p>
               </div>
             </div>
+            <% } else { %>
+            <div class="clue-card empty"><p>No clues yet</p></div>
             <% } %>
           </a>
         </div>
