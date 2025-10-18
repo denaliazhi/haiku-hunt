@@ -44,6 +44,13 @@ const controller = {
       cardUrl: url,
     });
   },
+
+  /* Render about page */
+  getAbout: (req, res) => {
+    res.render("about", {
+      options: req.app.locals.boroughs,
+    });
+  },
 };
 
 /* Helper function to hide fountain name except for 

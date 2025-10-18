@@ -16,65 +16,66 @@
         <a class="back-btn" href="<%= backLink %>">&lt; Back</a>
         <h1>Write a haiku</h1>
         <form action="<%= backLink %>/add" method="POST">
-            <p>Guide others to this landmark through a 17 syllable poem.</p>
-            <div class="haiku-fields">
-                    <label for="line-1">Line 1<span>5 syllables</span></label>
-                    <input
-                    type="text"
-                    id="line-1"
-                    name="line-1"
-                    minlength="5"
-                    maxlength="50"
-                    required
-                    placeholder="Time seems to stand still"
-                    value="<%= formEntry ? formEntry['line-1']: null %>"
-                    />
-                    <label for="line-2">Line 2<span>7 syllables</span></label>
-                    <input
-                    type="text"
-                    id="line-2"
-                    name="line-2"
-                    minlength="5"
-                    maxlength="50"
-                    required
-                    placeholder="in this place which I reside."
-                    value="<%= formEntry ? formEntry['line-2']: null %>"
-                    />
-                    <label for="line-3">Line 3<span>5 syllables</span></label>
-                    <input
-                    type="text"
-                    id="line-3"
-                    name="line-3"
-                    minlength="5"
-                    maxlength="50"
-                    required
-                    placeholder="I will wait for you."
-                    value="<%= formEntry ? formEntry['line-3']: null %>"
-                    />
-            </div>
-            <div id="author-field">
-                <label for="author">Author</label>
-                <input 
-                type="text"
-                id="author"
-                name="author"
-                minlength="2"
-                maxlength="20"
-                required
-                placeholder="Matsuo B."
-                value="<%= formEntry ? formEntry['author']: null %>"
-                />
-            </div>
-                <% if (errors) { %>
-            <div class="errors">
-                    <ul>
-                        <% errors.forEach(error => {%>
-                            <li><%= error.msg %></li>
-                        <% }); %>
-                    </ul>
-            </div>
-            <% } %>
-            <button type="submit">Publish</button>
+          <p>Guide others to this landmark through a 17 syllable poem.</p>
+          <div class="haiku-fields">
+            <label for="line-1">Line 1<span>5 syllables</span></label>
+            <input
+              type="text"
+              id="line-1"
+              name="line-1"
+              minlength="5"
+              maxlength="50"
+              required
+              placeholder="Time seems to stand still"
+              value="<%= formEntry ? formEntry['line-1']: null %>"
+            />
+            <label for="line-2">Line 2<span>7 syllables</span></label>
+            <input
+              type="text"
+              id="line-2"
+              name="line-2"
+              minlength="5"
+              maxlength="50"
+              required
+              placeholder="in this place which I reside."
+              value="<%= formEntry ? formEntry['line-2']: null %>"
+            />
+            <label for="line-3">Line 3<span>5 syllables</span></label>
+            <input
+              type="text"
+              id="line-3"
+              name="line-3"
+              minlength="5"
+              maxlength="50"
+              required
+              placeholder="I will wait for you."
+              value="<%= formEntry ? formEntry['line-3']: null %>"
+            />
+          </div>
+          <div id="author-field">
+            <label for="author">Author</label>
+            <input
+              type="text"
+              id="author"
+              name="author"
+              minlength="2"
+              maxlength="20"
+              required
+              placeholder="Matsuo B."
+              value="<%= formEntry ? formEntry['author']: null %>"
+            />
+          </div>
+          <% if (errors) { %>
+          <div class="errors">
+            <ul>
+              <% errors.forEach(error => {%>
+              <li><%= error.msg %></li>
+              <% }); %>
+            </ul>
+          </div>
+          <% } %>
+          <button type="submit">Publish</button>
+        </form>
       </article>
     </main>
   </body>
