@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/sidebar.ejs"); %>
+    <main>
+      <div class="page-header">
+        <h1>Join The Community</h1>
+      </div>
+      <article class="card-details">
+        <% if (currentUser) { %>
+        <h1>Welcome <%= currentUser.username %></h1>
+        <% } else { %>
+        <h1>Sign in</h1>
+        <% } %>
+        <form action="/sign-in" method="POST">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            minlength="3"
+            maxlength="30"
+          />
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            minlength="8"
+          />
+          <button type="submit">Sign in</button>
+        </form>
+      </article>
+    </main>
+  </body>
+</html>

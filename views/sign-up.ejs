@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/sidebar.ejs"); %>
+    <main>
+      <div class="page-header">
+        <h1>Join The Community</h1>
+      </div>
+      <article class="card-details">
+        <h1>Sign up</h1>
+        <form action="/sign-up" method="POST">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            minlength="3"
+            maxlength="30"
+            value="<%= formEntry? formEntry['username'] : null%>"
+          />
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            minlength="8"
+            value="<%= formEntry? formEntry['password'] : null%>"
+          />
+          <label for="confirm-password">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            required
+            minlength="8"
+          />
+          <% if (errors) { %>
+          <div class="errors">
+            <ul>
+              <% errors.forEach(error => {%>
+              <li><%= error.msg %></li>
+              <% }); %>
+            </ul>
+          </div>
+          <% } %>
+          <button type="submit">Sign up</button>
+        </form>
+      </article>
+    </main>
+  </body>
+</html>

@@ -1,8 +1,14 @@
+import passport from "passport";
+import bcrypt from "bcryptjs";
+import { validationResult, matchedData } from "express-validator";
+import { validateSignUp } from "./validateSignUp.js";
 import {
   getAllEntries,
   filterByName,
   filterByBorough,
 } from "../data/queries/dbFountains.js";
+import { obfuscate } from "../public/utils.js";
+import { addUser } from "../data/queries/dbUsers.js";
 
 const controller = {
   /* Render main page with all fountains */
@@ -13,7 +19,6 @@ const controller = {
     res.render("main", {
       title: "All Landmarks",
       entries: allFountains,
-      options: req.app.locals.boroughs,
       obfuscate: obfuscate,
       cardUrl: url,
     });
@@ -39,34 +44,74 @@ const controller = {
     res.render("main", {
       title: title,
       entries: matches,
-      options: req.app.locals.boroughs,
       obfuscate: obfuscate,
       cardUrl: url,
     });
   },
 
-  /* Render about page */
-  getAbout: (req, res) => {
-    res.render("about", {
-      options: req.app.locals.boroughs,
+  /* Render sign-up page */
+  getSignUp: (req, res) => {
+    res.render("sign-up", {
+      errors: null,
+      formEntry: null,
     });
   },
-};
 
-/* Helper function to hide fountain name except for 
-   first letter of each word*/
-function obfuscate(name) {
-  const dashed = name
-    .split(" ")
-    .map((word) => {
-      if (word.match(/fountain/i)) {
-        return word;
+  /* Validate sign-up fields and add new user to database */
+  postSignUp: [
+    validateSignUp,
+    async (req, res, next) => {
+      const errors = validationResult(req);
+      if (errors.isEmpty()) {
+        // If valid, update users table with new username and password
+        const matched = matchedData(req);
+        try {
+          const hashedPassword = await bcrypt.hash(matched.password, 10);
+          await addUser(matched.username, hashedPassword);
+          res.redirect("/sign-in");
+        } catch (error) {
+          console.error(error);
+          next(error);
+        }
       } else {
-        return word[0] + word.slice(1).replace(/./g, "-");
+        // If invalid, re-render form with errors and previously entered data
+        res.render("sign-up", {
+          errors: errors.array(),
+          formEntry: req.body,
+        });
       }
-    })
-    .join(" ");
-  return dashed;
-}
+    },
+  ],
+
+  /* Render sign-in page */
+  getSignIn: (req, res) => {
+    res.render("sign-in");
+  },
+
+  /* Authenticate user sign-in */
+  postSignIn: [
+    passport.authenticate("local", {
+      successRedirect: "/sign-in", // TO DO: change to user dashboard
+      failureRedirect: "/sign-in", // TO DO: show error message
+    }),
+    (req, res) => {
+      console.log(currentUser);
+      return;
+    },
+  ],
+
+  /* Sign out the user */
+  getSignOut: (req, res, next) => {
+    req.logout((err) => {
+      if (err) return next(err);
+      res.redirect("/");
+    });
+  },
+
+  /* Render about page */
+  getAbout: (req, res) => {
+    res.render("about");
+  },
+};
 
 export default controller;

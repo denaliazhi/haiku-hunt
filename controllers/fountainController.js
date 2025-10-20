@@ -1,83 +1,7 @@
-import { body, validationResult, matchedData } from "express-validator";
-import { syllable } from "syllable";
-import {
-  RegExpMatcher,
-  englishDataset as dataset,
-  englishRecommendedTransformers as recommended,
-} from "obscenity";
-
+import { validationResult, matchedData } from "express-validator";
+import { validateClue } from "./validateClue.js";
 import { addClue, getFountainClues } from "../data/queries/dbClues.js";
 import { getFountain } from "../data/queries/dbFountains.js";
-
-const validateClue = [
-  body("*")
-    // Check all fields for inappropriate words
-    .custom((value) => {
-      const matcher = new RegExpMatcher({
-        ...dataset.build(),
-        ...recommended,
-      });
-      if (matcher.hasMatch(value)) {
-        const wordsToEdit = [];
-
-        const matches = matcher.getAllMatches(value, true);
-        for (const match of matches) {
-          const { phraseMetadata } =
-            dataset.getPayloadWithPhraseMetadata(match);
-          wordsToEdit.push(phraseMetadata.originalWord);
-        }
-        throw new Error(
-          `Uh oh! Edit '${value}' for words like '${wordsToEdit.join(", ")}'.`
-        );
-      }
-      return true;
-    }),
-
-  body("author")
-    .isLength({ min: 2, max: 20 })
-    .withMessage(`Name must be between 2-20 characters`),
-
-  body("line-1")
-    .isLength({ min: 5, max: 50 })
-    .withMessage("Line 1 must be between 5-50 characters")
-    // Check that line has 5 syllables
-    .custom((value) => {
-      const count = syllable(value);
-      if (count !== 5) {
-        throw new Error("Line 1 must have exactly 5 syllables");
-      }
-      return true;
-    }),
-
-  body("line-2")
-    .isLength({ min: 5, max: 50 })
-    .withMessage("Line 2 must be between 5-50 characters")
-    // Check that line has 7 syllables
-    .custom((value) => {
-      const count = syllable(value);
-      if (count !== 7) {
-        throw new Error("Line 2 must have exactly 7 syllables");
-      }
-      return true;
-    }),
-
-  body("line-3")
-    .isLength({ min: 5, max: 50 })
-    .withMessage("Line 3 must be between 5-50 characters")
-    // Check that line has 5 syllables
-    .custom((value) => {
-      const count = syllable(value);
-      if (count !== 5) {
-        throw new Error("Line 3 must have exactly 5 syllables");
-      }
-      return true;
-    }),
-
-  body("*")
-    // Sanitize all fields
-    .trim()
-    .customSanitizer((value) => value.replace(/\s+/g, " ")),
-];
 
 const controller = {
   /* Render fountain details page */
@@ -89,7 +13,6 @@ const controller = {
       res.render("fountain", {
         title: "The Deets",
         entry: fountain[0],
-        options: req.app.locals.boroughs,
         clues: clues,
       });
     } catch (err) {
@@ -101,8 +24,7 @@ const controller = {
   /* Render form to add a haiku clue */
   getAddClue: (req, res) => {
     const backLink = `${req.baseUrl}/${req.params.id}`;
-    res.render("clueForm", {
-      options: req.app.locals.boroughs,
+    res.render("clue-form", {
       id: req.params.id,
       errors: null,
       formEntry: null,
@@ -118,20 +40,19 @@ const controller = {
       const backLink = `${req.baseUrl}/${req.params.id}`;
       const errors = validationResult(req);
 
-      // If valid, update clues table with new clue for fountain id
       if (errors.isEmpty()) {
+        // If valid, update clues table with new clue for fountain id
         await addClue([req.params.id, ...Object.values(matchedData(req))]);
-        return res.redirect(backLink);
+        res.redirect(backLink);
+      } else {
+        // If invalid, re-render form with errors and previously entered data
+        res.status(400).render("clue-form", {
+          id: id,
+          errors: errors.array(),
+          formEntry: req.body,
+          backLink: backLink,
+        });
       }
-
-      // If invalid, re-render form with errors and previously entered data
-      res.status(400).render("clueForm", {
-        options: req.app.locals.boroughs,
-        id: id,
-        errors: errors.array(),
-        formEntry: req.body,
-        backLink: backLink,
-      });
     },
   ],
 };

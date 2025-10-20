@@ -1,16 +1,15 @@
-import { getAllBoroughs } from "./data/queries/dbFountains.js";
+import { getAllBoroughs } from "../data/queries/dbFountains.js";
 
-async function initialConfig(app) {
+async function ejsConfig(app) {
   try {
     const boroughs = await getAllBoroughs();
     if (boroughs.length > 0) {
-      app.locals.boroughs = boroughs;
+      app.locals.options = boroughs;
     }
-    console.log("Sidebar config loaded.");
   } catch (err) {
     console.log("Sidebar config not loaded: ", err);
     throw new Error("There was an issue loading this application.");
   }
 }
 
-export default initialConfig;
+export default ejsConfig;

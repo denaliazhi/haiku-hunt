@@ -1,0 +1,74 @@
+1. When formatting INSERT statement use %L not `${}` 
+to dynamically insert values. The former escapes single 
+quotes whereas the latter does not. If a string has an 
+apostrophe, the latter will fail due to mismatch in '.
+
+2. When INSERT, must specify columns to update in ()
+to prevent attempt to assign value to the first column,
+which is the ID auto-generated column
+
+3. Order of column names must be the same between the 
+CREATE TABLE and INSERT statements if the columns to be updated
+via INSERT are not explicitly in ()
+
+4. `SELECT DISTINCT *` returns duplicates because the id column is unique
+
+5. Connect to SQL database from command line via 
+`psl "postgres://koyeb-adm:npg_G0j4gmtfcVxz@ep-billowing-pine-a4jql561.us-east-1.pg.koyeb.app/koyebdb"`
+
+6. Express validator: can create custom validations,
+apply validations to all using body(*), sanitize last
+
+7. Left join will cause 'id' column to be null if both tables have 'id' column 
+i.e. fountains with 'id' and clues with 'id' but joining on 'fountainsId'
+
+INVESTIGATE
+[DONE] Better SQL queries...clean table data or use CTE instead of repeating same dedup subquery
+[DONE] How to apply multiple filters + search params in any order
+
+TO DO
+[DONE] Validate haiku submission + author name: 
+    - check for blacklisted words
+    - check syllables per line
+
+[DONE] Update database with valid haiku
+
+[DONE] Obfuscate fountain name in title of card
+
+- Change routes so that any fountain detail card can go back to filtered search results
+
+[DONE] Mobile view
+- Rebrand to haiku hunt not fountains
+
+- Comment code
+- Accessibility
+-------
+- Add about project page
+- Write README.md
+_____
+Extras
+- Blur location in details view
+- Guess: input fountain name or geographic coordinates // Reveal (no credit for user)
+- Difficulty levels (partial name reveal vs no name just clue)
+
+- Add icons
+
+- Hamburger menu on mobile
+
+- Update votes per haiku on click without re-routing
+
+- Add sort dropdown
+- Create view for all haikus (feed?)
+- Create view to get a random haiku
+
+- Expand beyond fountains!
+- Allow user to submit new landmarks to find
+- Allow user to save haikus to a "hunt" i.e. curate
+- Allow user to see all haikus created by themselves
+- Allow user to share haikus
+
+- Make fields editable by admin
+- Email admin whenever new haiku submitted
+
+- Spin off: scavenger hunt based on random observations like "man wearing red suit",
+  see how many other people find the same thing as you wherever they are
