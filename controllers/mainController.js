@@ -7,7 +7,6 @@ import {
   filterByName,
   filterByBorough,
 } from "../data/queries/dbLandmarks.js";
-import { obfuscate } from "../public/utils/stringUtils.js";
 import { addUser } from "../data/queries/dbUsers.js";
 
 const controller = {
@@ -19,7 +18,6 @@ const controller = {
     res.render("main", {
       title: "All Landmarks",
       entries: allFountains,
-      obfuscate: obfuscate,
       cardUrl: url,
     });
   },
@@ -33,7 +31,6 @@ const controller = {
     const param = req.params.group;
     if (param.match(/search/i)) {
       const searchTerm = req.query.name;
-      console.log("Search term:", searchTerm);
       matches = await filterByName(searchTerm);
       title = `Landmarks with '${searchTerm}' in name`;
     } else {
@@ -44,7 +41,6 @@ const controller = {
     res.render("main", {
       title: title,
       entries: matches,
-      obfuscate: obfuscate,
       cardUrl: url,
     });
   },

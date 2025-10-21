@@ -11,7 +11,11 @@
         <p>
           <a href="/<%= entry.borough %>"><%= entry.borough %></a>
         </p>
+        <% if (entry.solved) { %>
         <h1><%= entry.name %></h1>
+        <% } else { %>
+        <h1 class="blurred">Anti-cheating dummy text</h1>
+        <% } %>
         <div class="categories">
           <% entry.categories ? entry.categories.split(",").map(category => { %>
           <p><%= category.trim() %></p>
@@ -48,18 +52,9 @@
               <p><%= clue.haiku_line_3 %></p>
             </div>
             <div class="clue-details">
-              <!-- <div class="votes">
-                <button 
-                onclick=""
-                id="up-vote" 
-                aria-label="Upvote this haiku">
-                  <span>+</span>
-                </button>
-                <p><%= clue.votes %></p>
-                <button id="down-vote" aria-label="Downvote this haiku">
-                  <span>-</span>
-                </button>
-              </div> -->
+              <a href="/save-clue" aria-label="Save clue"
+                ><span class="save-btn">Save</span></a
+              >
               <p>
                 <%= clue.author %> on <%= new
                 Date(clue.submitted).toLocaleDateString("en-US") %>

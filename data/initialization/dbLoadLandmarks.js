@@ -5,9 +5,9 @@
 import FIELDS from "./queryFields.js";
 
 /* Create `landmarks` table in SQL database and populate
-   it with the data for each landmark */
+   it with the initial landmarks data */
 const landmarksQuery = `
-  DROP TABLE IF EXISTS landmarks;
+  DROP TABLE IF EXISTS landmarks CASCADE;
 
   CREATE TABLE IF NOT EXISTS landmarks (
       id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,

@@ -6,8 +6,12 @@ import { Client } from "pg";
 import format from "pg-format";
 
 import { sessionQuery } from "./dbLoadSessions.js";
-import { usersQuery } from "./dbLoadUsers.js";
-import users from "./initialUsers.js";
+import {
+  usersQuery,
+  savedCluesQuery,
+  solvedLandmarksQuery,
+} from "./dbLoadUsers.js";
+import getInitialUser from "./initialUsers.js";
 import { getFountainsFromAPI } from "./initialLandmarks.js";
 import {
   landmarksQuery,
@@ -39,17 +43,20 @@ async function main() {
     await client.query(sessionQuery);
     console.log("Session table initialized.");
 
-    await client.query(format(usersQuery, users));
-    console.log("Users table initialized.");
-
     await client.query(format(landmarksQuery, formatAllRows(data)));
-    console.log("Landmarks table initialized.");
-
     await client.query(filterLandmarksQuery);
-    console.log("Landmarks table filtered to relevant rows.");
+    console.log("Landmarks table initialized and filtered.");
+
+    const initialUser = await getInitialUser();
+    await client.query(format(usersQuery, initialUser));
+    console.log("All users table initialized.");
 
     await client.query(format(cluesQuery, clues));
     console.log("Clues table initialized.");
+
+    await client.query(savedCluesQuery);
+    await client.query(solvedLandmarksQuery);
+    console.log("User-specific tables initialized.");
   } catch (err) {
     console.log(err);
   }

@@ -1,3 +1,8 @@
-const users = [[process.env.APP_USER, process.env.APP_PWD, true]];
+import bcrypt from "bcryptjs";
 
-export default users;
+async function getInitialUser() {
+  const password = await bcrypt.hash(process.env.APP_PWD, 10);
+  return [[process.env.APP_USER, password, true]];
+}
+
+export default getInitialUser;

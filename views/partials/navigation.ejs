@@ -25,7 +25,9 @@
         <p>By borough</p>
         <ul>
           <% options.forEach(option => { %>
-          <a href="/<%= option.borough %>"><li><%= option.borough %></li></a>
+          <a href="/<%= option.borough %>"
+            ><li><%= capitalizeAll(option.borough) %></li></a
+          >
           <% }); %>
         </ul>
       </div>

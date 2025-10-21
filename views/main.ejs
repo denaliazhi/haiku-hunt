@@ -10,15 +10,17 @@
           <%= entries.length %> <%= entries.length === 1 ? "result" :
           "results"%>
         </p>
-        <div></div>
       </div>
       <div class="card-container">
         <% entries.map(entry => { %>
         <div class="card">
           <a href="<%= entry.borough %>/<%= entry.id %>">
-            <p class="small-text"><%= entry.borough %></p>
-            <h2><%= obfuscate(entry.name, "fountain") %></h2>
-            <% if (entry.haiku_line_1) { %>
+            <p class="small-text"><%= capitalizeAll(entry.borough) %></p>
+            <% if (entry.solved) { %>
+            <h2><%= entry.name %></h2>
+            <% } else { %>
+            <h2 class="blurred">Anti-cheating dummy text</h2>
+            <% } %> <% if (entry.haiku_line_1) { %>
             <div class="clue-card">
               <div>
                 <p><%= entry.haiku_line_1 %></p>

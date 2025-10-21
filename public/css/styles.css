@@ -48,11 +48,6 @@ button {
   border: none;
 }
 
-.small-text {
-  font-size: 0.8rem;
-  color: rgb(var(--accent));
-}
-
 input {
   font-size: 1rem;
   font-family: "DM Sans";
@@ -63,6 +58,20 @@ input {
   background-color: rgba(var(--accent), 0.3);
   border: none;
   border-radius: var(--extra-rounded);
+}
+
+.small-text {
+  font-size: 0.8rem;
+  color: rgb(var(--accent));
+}
+
+.errors {
+  color: rgb(var(--error));
+}
+
+.blurred {
+  color: black;
+  filter: blur(0.7rem);
 }
 
 /* Sidebar Elements */
@@ -211,12 +220,10 @@ a.cta-btn {
 }
 
 .sign-up .errors {
-  color: rgb(var(--error));
   margin: 0.5rem 0 0 0.5rem;
 }
 
 .sign-in .errors {
-  color: rgb(var(--error));
   margin: auto;
 }
 
@@ -226,7 +233,7 @@ main {
   grid-area: main;
 
   width: 100%;
-  padding: 0 3rem 3rem 3rem;
+  padding: 0.8rem 3rem 3rem 3rem;
 }
 
 .page-header {
@@ -335,6 +342,11 @@ main > h1,
   border: 2px solid transparent;
   border-radius: var(--rounded);
   background-color: rgba(var(--accent), 0.4);
+
+  word-wrap: break-word;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--accent)) transparent;
 
   display: flex;
   flex-direction: column;

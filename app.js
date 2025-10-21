@@ -14,6 +14,8 @@ import ejsConfig from "./config/ejs.js";
 import mainRouter from "./routers/mainRouter.js";
 import landmarkRouter from "./routers/landmarkRouter.js";
 
+import { capitalizeAll, obfuscate } from "./public/utils/stringUtils.js";
+
 /**
  * ---- General set-up ----
  */
@@ -30,6 +32,9 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
+
+app.locals.capitalizeAll = capitalizeAll;
+app.locals.obfuscate = obfuscate;
 
 /**
  * ---- Session set-up ----

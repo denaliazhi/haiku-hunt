@@ -1,5 +1,9 @@
-/* Helper function to hide name except for first letter
-   of each word in the name or designated exception*/
+/**
+ * Helper functions to manipulate strings
+ */
+
+/* Hide all words in name except for first letter of
+   each word and/or a special exception word */
 function obfuscate(name, exception) {
   const regex = new RegExp(exception, "i");
   const dashed = name
@@ -15,4 +19,12 @@ function obfuscate(name, exception) {
   return dashed;
 }
 
-export { obfuscate };
+/* Capitalize each word in name */
+function capitalizeAll(name) {
+  return name
+    .split(" ")
+    .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
+
+export { obfuscate, capitalizeAll };

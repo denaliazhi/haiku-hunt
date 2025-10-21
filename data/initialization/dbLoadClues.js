@@ -4,7 +4,7 @@
  */
 
 const cluesQuery = `
-    DROP TABLE IF EXISTS clues;
+    DROP TABLE IF EXISTS clues CASCADE;
 
     CREATE TABLE IF NOT EXISTS clues (
         clueId INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
