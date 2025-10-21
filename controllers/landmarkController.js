@@ -23,13 +23,17 @@ const controller = {
 
   /* Render form to add a haiku clue */
   getAddClue: (req, res) => {
-    const backLink = `${req.baseUrl}/${req.params.id}`;
-    res.render("clue-form", {
-      id: req.params.id,
-      errors: null,
-      formEntry: null,
-      backLink: backLink,
-    });
+    if (req.isAuthenticated()) {
+      const backLink = `${req.baseUrl}/${req.params.id}`;
+      res.render("clue-form", {
+        id: req.params.id,
+        errors: null,
+        formEntry: null,
+        backLink: backLink,
+      });
+    } else {
+      res.redirect("/sign-up");
+    }
   },
 
   /* Handle submission of new haiku clue */

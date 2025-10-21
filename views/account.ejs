@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/navigation.ejs"); %>
+    <main>
+      <div class="page-header">
+        <h1>Welcome back, <%= currentUser.username %></h1>
+        <p>What will you write today?</p>
+      </div>
+      <div class="card-container"></div>
+    </main>
+  </body>
+</html>

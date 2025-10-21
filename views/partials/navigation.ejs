@@ -1,7 +1,18 @@
+<% if (currentUser) { %>
+<div class="top-nav">
+  <a href="/sign-out">Sign out</a>
+</div>
+<% } else { %>
+<div class="top-nav">
+  <a href="/sign-in">Sign in</a>
+  <a href="/sign-up" class="cta-btn">Register</a>
+</div>
+<% } %>
+
 <div class="side-bar">
   <header>
     <div>
-      <div class="site-name">Haiku Hunt</div>
+      <div class="site-name"><a href="/">Haiku Hunt</a></div>
       <p>A poetic search for landmarks in NYC</p>
     </div>
     <nav>
@@ -18,7 +29,6 @@
           <% }); %>
         </ul>
       </div>
-      <a href="/">See all landmarks</a>
     </nav>
   </header>
   <footer>

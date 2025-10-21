@@ -2,13 +2,13 @@
 <html lang="en">
   <%- include("./partials/head.ejs") %>
   <body>
-    <%- include("./partials/sidebar.ejs"); %>
+    <%- include("./partials/navigation.ejs"); %>
     <main>
-      <div class="page-header">
-        <h1>Join The Community</h1>
-      </div>
-      <article class="card-details">
+      <article class="sign-up card-details">
         <h1>Sign up</h1>
+        <p class="small-text">
+          Publish poems, favorite clues, and submit new landmarks
+        </p>
         <form action="/sign-up" method="POST">
           <label for="username">Username</label>
           <input
@@ -46,7 +46,7 @@
             </ul>
           </div>
           <% } %>
-          <button type="submit">Sign up</button>
+          <button class="cta-btn" type="submit">Sign up</button>
         </form>
       </article>
     </main>

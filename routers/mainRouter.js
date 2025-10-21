@@ -1,6 +1,6 @@
 import { Router } from "express";
 import mainController from "../controllers/mainController.js";
-import { isAuth } from "../controllers/authMiddleware.js";
+import { isAuth } from "../config/authMiddleware.js";
 
 const router = Router();
 
@@ -13,11 +13,6 @@ router.post("/sign-up", mainController.postSignUp);
 router.get("/sign-in", mainController.getSignIn);
 router.post("/sign-in", mainController.postSignIn);
 router.get("/sign-out", mainController.getSignOut);
-
-// TO DO: remove this later, just a test
-router.get("/secret", isAuth, (req, res) => {
-  res.send("Welcome");
-});
 
 router.get("/about", mainController.getAbout);
 

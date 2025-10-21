@@ -22,9 +22,11 @@ export const validateSignUp = [
       }
       return true;
     })
+    .isLength({ min: 8 })
+    .withMessage("Password must have at least 8 characters")
     .isStrongPassword()
     .withMessage(
-      "Password must have at least 8 characters and include at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol"
+      "Password must include at least 1 uppercase, 1 lowercase, 1 number, and 1 symbol"
     ),
 
   body("*")

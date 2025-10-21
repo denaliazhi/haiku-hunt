@@ -7,7 +7,7 @@ import {
   filterByName,
   filterByBorough,
 } from "../data/queries/dbLandmarks.js";
-import { obfuscate } from "../public/utils.js";
+import { obfuscate } from "../public/utils/stringUtils.js";
 import { addUser } from "../data/queries/dbUsers.js";
 
 const controller = {
@@ -85,20 +85,19 @@ const controller = {
 
   /* Render sign-in page */
   getSignIn: (req, res) => {
-    res.render("sign-in");
+    const errors = req.session.messages || [];
+    req.session.messages = [];
+    res.render("sign-in", {
+      error: errors.length > 0 ? "Incorrect username or password" : null,
+    });
   },
 
   /* Authenticate user sign-in */
-  postSignIn: [
-    passport.authenticate("local", {
-      successRedirect: "/sign-in", // TO DO: change to user dashboard
-      failureRedirect: "/sign-in", // TO DO: show error message
-    }),
-    (req, res) => {
-      console.log(currentUser);
-      return;
-    },
-  ],
+  postSignIn: passport.authenticate("local", {
+    successRedirect: "/", // TO DO: change to user dashboard
+    failureRedirect: "/sign-in", // TO DO: show error message
+    failureMessage: true,
+  }),
 
   /* Sign out the user */
   getSignOut: (req, res, next) => {

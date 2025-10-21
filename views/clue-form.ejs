@@ -2,7 +2,7 @@
 <html lang="en">
   <%- include("./partials/head.ejs"); %>
   <body>
-    <%- include("./partials/sidebar.ejs"); %>
+    <%- include("./partials/navigation.ejs") %>
     <main>
       <div class="page-header">
         <h1>Add Your Clue</h1>
@@ -57,7 +57,7 @@
               maxlength="20"
               required
               placeholder="Matsuo B."
-              value="<%= formEntry ? formEntry['author']: null %>"
+              value="<%= formEntry ? formEntry['author']: currentUser.username %>"
             />
           </div>
           <% if (errors) { %>
@@ -69,7 +69,7 @@
             </ul>
           </div>
           <% } %>
-          <button type="submit">Publish</button>
+          <button class="cta-btn" type="submit">Publish</button>
         </form>
       </article>
     </main>
