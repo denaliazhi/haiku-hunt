@@ -7,6 +7,7 @@ import format from "pg-format";
 
 import { sessionQuery } from "./dbLoadSessions.js";
 import { usersQuery } from "./dbLoadUsers.js";
+import users from "./initialUsers.js";
 import { getFountainsFromAPI } from "./initialLandmarks.js";
 import {
   landmarksQuery,
@@ -38,7 +39,7 @@ async function main() {
     await client.query(sessionQuery);
     console.log("Session table initialized.");
 
-    await client.query(usersQuery);
+    await client.query(format(usersQuery, users));
     console.log("Users table initialized.");
 
     await client.query(format(landmarksQuery, formatAllRows(data)));

@@ -1,7 +1,7 @@
 import passport from "passport";
 import bcrypt from "bcryptjs";
 import { validationResult, matchedData } from "express-validator";
-import { validateSignUp } from "./validateSignUp.js";
+import { validateSignUp } from "./validations/validateSignUp.js";
 import {
   getAllEntries,
   filterByName,

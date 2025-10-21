@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { findUser } from "../data/queries/dbUsers.js";
+import { findUser } from "../../data/queries/dbUsers.js";
 
 export const validateSignUp = [
   body("username")

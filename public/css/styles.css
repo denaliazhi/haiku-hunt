@@ -445,6 +445,7 @@ main > h1,
 
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 #author-field label {

@@ -17,7 +17,7 @@ async function getLandmarkClues(id) {
 
 async function addClue(values) {
   const sql = `
-  INSERT INTO clues (landmarkId, haiku_line_1, haiku_line_2, haiku_line_3, author)
+  INSERT INTO clues (userId, landmarkId, haiku_line_1, haiku_line_2, haiku_line_3, author)
   VALUES %L
   ;`;
   try {

@@ -41,7 +41,7 @@ TO DO
 - Change routes so that any fountain detail card can go back to filtered search results
 
 [DONE] Mobile view
-- Rebrand to haiku hunt not fountains
+[DONE] Rebrand to haiku hunt not fountains
 
 - Comment code
 - Accessibility
@@ -64,7 +64,6 @@ Extras
 - Create view for all haikus (feed?)
 - Create view to get a random haiku
 
-- Expand beyond fountains!
 - Allow user to submit new landmarks to find
 - Allow user to save haikus to a "hunt" i.e. curate
 - Allow user to see all haikus created by themselves

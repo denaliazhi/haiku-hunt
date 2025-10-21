@@ -12,6 +12,8 @@ const usersQuery = `
         password VARCHAR(255) NOT NULL,
         admin BOOLEAN DEFAULT FALSE
     );
+
+    INSERT INTO clues (username, password, admin) VALUES %L;
 `;
 
 export { usersQuery };

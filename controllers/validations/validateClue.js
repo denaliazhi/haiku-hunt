@@ -28,6 +28,14 @@ export const validateClue = [
         );
       }
       return true;
+    })
+    // Fields must include only letters and common punctuation marks
+    .custom((value) => {
+      const pattern = /[^ \p{L}.,?!:;\-()'"]+/u;
+      if (pattern.test(value)) {
+        throw new Error(`Remove numbers or special symbols in '${value}'.`);
+      }
+      return true;
     }),
 
   body("author")

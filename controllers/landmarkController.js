@@ -1,5 +1,5 @@
 import { validationResult, matchedData } from "express-validator";
-import { validateClue } from "./validateClue.js";
+import { validateClue } from "./validations/validateClue.js";
 import { addClue, getLandmarkClues } from "../data/queries/dbClues.js";
 import { getLandmark } from "../data/queries/dbLandmarks.js";
 
@@ -46,7 +46,11 @@ const controller = {
 
       if (errors.isEmpty()) {
         // If valid, update clues table with new clue for landmark id
-        await addClue([req.params.id, ...Object.values(matchedData(req))]);
+        await addClue([
+          req.user.userId,
+          req.params.id,
+          ...Object.values(matchedData(req)),
+        ]);
         res.redirect(backLink);
       } else {
         // If invalid, re-render form with errors and previously entered data
