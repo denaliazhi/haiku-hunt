@@ -6,7 +6,7 @@ import {
   getAllEntries,
   filterByName,
   filterByBorough,
-} from "../data/queries/dbFountains.js";
+} from "../data/queries/dbLandmarks.js";
 import { obfuscate } from "../public/utils.js";
 import { addUser } from "../data/queries/dbUsers.js";
 

@@ -205,13 +205,13 @@ main > h1,
   margin-bottom: 0.5rem;
 }
 
-.fountain-facts {
+.landmark-facts {
   display: flex;
   gap: 2rem;
   flex-wrap: wrap;
 }
 
-.fountain-facts > div {
+.landmark-facts > div {
   width: 12rem;
 }
 
@@ -469,7 +469,7 @@ main > h1,
     margin-bottom: 1rem;
   }
 
-  .fountain-facts {
+  .landmark-facts {
     gap: 1rem;
   }
 

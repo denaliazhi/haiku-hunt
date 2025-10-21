@@ -1,37 +1,37 @@
 /**
- * Queries to interact with fountains table in SQL database.
+ * Queries to interact with landmarks table in SQL database.
  */
 import pool from "../dbConnection.js";
 
-/* Get a fountain by its unique id */
-async function getFountain(id) {
+/* Get a landmark by its unique id */
+async function getLandmark(id) {
   const sql = `
   SELECT *
-  FROM fountains
+  FROM landmarks
   WHERE id = $1
   ;`;
   const { rows } = await pool.query(sql, [id]);
   return rows;
 }
 
-// Joins fountains and clues tables
+// Joins landmarks and clues tables
 const baseQuery = `
   WITH ranked_clues AS (
-    SELECT *, ROW_NUMBER() OVER (PARTITION BY fountainId ORDER BY votes DESC) AS ranking
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY landmarkId ORDER BY votes DESC) AS ranking
     FROM clues
   )
   SELECT *
-  FROM fountains f 
-  LEFT JOIN ranked_clues c ON f.id = c.fountainId `;
+  FROM landmarks f 
+  LEFT JOIN ranked_clues c ON f.id = c.landmarkId `;
 
-/* Get all fountains and each fountain's top clue (if it exists) */
+/* Get all landmarks and each landmark's top clue (if it exists) */
 async function getAllEntries() {
   const query = baseQuery + `WHERE c.ranking = 1 OR c.ranking IS NULL`;
   const { rows } = await pool.query(query);
   return rows;
 }
 
-/* Get fountains located in a borough */
+/* Get landmarks located in a borough */
 async function filterByBorough(borough) {
   const query =
     baseQuery +
@@ -40,7 +40,7 @@ async function filterByBorough(borough) {
   return rows;
 }
 
-/* Get fountains with a name matching 
+/* Get landmarks with a name matching 
    (all or part of) the search term */
 async function filterByName(term) {
   const query =
@@ -49,18 +49,18 @@ async function filterByName(term) {
   return rows;
 }
 
-/* Get all boroughs where fountains are located */
+/* Get all boroughs where landmarks are located */
 async function getAllBoroughs() {
   const query = `
   SELECT DISTINCT borough
-  FROM fountains
+  FROM landmarks
   ;`;
   const { rows } = await pool.query(query);
   return rows;
 }
 
 export {
-  getFountain,
+  getLandmark,
   getAllEntries,
   filterByBorough,
   filterByName,

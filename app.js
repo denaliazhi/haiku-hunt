@@ -12,7 +12,7 @@ import "./config/passport.js";
 import ejsConfig from "./config/ejs.js";
 
 import mainRouter from "./routers/mainRouter.js";
-import fountainRouter from "./routers/fountainRouter.js";
+import landmarkRouter from "./routers/landmarkRouter.js";
 
 /**
  * ---- General set-up ----
@@ -22,11 +22,13 @@ const app = express();
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 const assetsPath = path.join(__dirname, "public");
+app.use(express.static(assetsPath));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(express.static(assetsPath));
+
 app.use(express.urlencoded({ extended: true }));
 
 /**
@@ -43,7 +45,7 @@ app.use(
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     },
   })
 );
@@ -52,11 +54,6 @@ app.use(
  * ---- Passport authentication ----
  */
 app.use(passport.session());
-
-app.use((req, res, next) => {
-  console.log(req.session);
-  next();
-});
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -68,11 +65,12 @@ app.use((req, res, next) => {
  */
 
 app.use("/", mainRouter);
-app.use("/:group", fountainRouter);
+app.use("/:group", landmarkRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.statusCode || 500).send(err.message);
+  // TO DO: create error page with redirect link
 });
 
 /**
@@ -83,6 +81,6 @@ app.listen(PORT, async (err) => {
   if (err) {
     throw err;
   }
-  await ejsConfig(app);
   console.log(`Server running on port ${PORT}`);
+  await ejsConfig(app); // TO DO: move this
 });

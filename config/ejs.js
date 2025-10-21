@@ -1,4 +1,4 @@
-import { getAllBoroughs } from "../data/queries/dbFountains.js";
+import { getAllBoroughs } from "../data/queries/dbLandmarks.js";
 
 async function ejsConfig(app) {
   try {

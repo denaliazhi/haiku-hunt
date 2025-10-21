@@ -4,12 +4,12 @@
 import pool from "../dbConnection.js";
 import format from "pg-format";
 
-/* Get clues for a fountain */
-async function getFountainClues(id) {
+/* Get clues for a landmark */
+async function getLandmarkClues(id) {
   const sql = `
   SELECT *
   FROM clues
-  WHERE fountainId = $1
+  WHERE landmarkId = $1
   ;`;
   const { rows } = await pool.query(sql, [id]);
   return rows;
@@ -17,7 +17,7 @@ async function getFountainClues(id) {
 
 async function addClue(values) {
   const sql = `
-  INSERT INTO clues (fountainId, haiku_line_1, haiku_line_2, haiku_line_3, author)
+  INSERT INTO clues (landmarkId, haiku_line_1, haiku_line_2, haiku_line_3, author)
   VALUES %L
   ;`;
   try {
@@ -28,4 +28,4 @@ async function addClue(values) {
   }
 }
 
-export { getFountainClues, addClue };
+export { getLandmarkClues, addClue };

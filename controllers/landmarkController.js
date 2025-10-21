@@ -1,23 +1,23 @@
 import { validationResult, matchedData } from "express-validator";
 import { validateClue } from "./validateClue.js";
-import { addClue, getFountainClues } from "../data/queries/dbClues.js";
-import { getFountain } from "../data/queries/dbFountains.js";
+import { addClue, getLandmarkClues } from "../data/queries/dbClues.js";
+import { getLandmark } from "../data/queries/dbLandmarks.js";
 
 const controller = {
-  /* Render fountain details page */
+  /* Render landmark details page */
   getDetails: async (req, res) => {
     const id = req.params.id;
     try {
-      const fountain = await getFountain(id);
-      const clues = await getFountainClues(id);
-      res.render("fountain", {
+      const landmark = await getLandmark(id);
+      const clues = await getLandmarkClues(id);
+      res.render("landmark", {
         title: "The Deets",
-        entry: fountain[0],
+        entry: landmark[0],
         clues: clues,
       });
     } catch (err) {
       console.log(err);
-      res.status(404).send("Fountain not found.");
+      res.status(404).send("Landmark not found.");
     }
   },
 
@@ -41,7 +41,7 @@ const controller = {
       const errors = validationResult(req);
 
       if (errors.isEmpty()) {
-        // If valid, update clues table with new clue for fountain id
+        // If valid, update clues table with new clue for landmark id
         await addClue([req.params.id, ...Object.values(matchedData(req))]);
         res.redirect(backLink);
       } else {
