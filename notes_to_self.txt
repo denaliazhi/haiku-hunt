@@ -14,13 +14,16 @@ via INSERT are not explicitly in ()
 4. `SELECT DISTINCT *` returns duplicates because the id column is unique
 
 5. Connect to SQL database from command line via 
-`psl "postgres://koyeb-adm:npg_G0j4gmtfcVxz@ep-billowing-pine-a4jql561.us-east-1.pg.koyeb.app/koyebdb"`
+`psl "postgres://koyeb-adm:blahblahblah"`
 
 6. Express validator: can create custom validations,
 apply validations to all using body(*), sanitize last
 
 7. Left join will cause 'id' column to be null if both tables have 'id' column 
 i.e. fountains with 'id' and clues with 'id' but joining on 'fountainsId'
+
+8. If using a controller, passport.authenticate is standalone middleware, 
+do not called in (req, res) => {} will lead to infinite loop
 
 INVESTIGATE
 [DONE] Better SQL queries...clean table data or use CTE instead of repeating same dedup subquery
