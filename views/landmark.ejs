@@ -14,7 +14,7 @@
         <% if (entry.solved) { %>
         <h1><%= entry.name %></h1>
         <% } else { %>
-        <h1 class="blurred">Anti-cheating dummy text</h1>
+        <h1><%= obfuscate(entry.name) %></h1>
         <% } %>
         <div class="categories">
           <% entry.categories ? entry.categories.split(",").map(category => { %>
@@ -52,9 +52,23 @@
               <p><%= clue.haiku_line_3 %></p>
             </div>
             <div class="clue-details">
-              <a href="/save-clue" aria-label="Save clue"
-                ><span class="save-btn">Save</span></a
+              <% if (clue.is_saved) { %>
+              <form
+                action="/<%= entry.borough %>/<%= entry.id %>/unsave/<%= clue.clueid %>"
+                method="POST"
               >
+                <button type="submit">Saved</button>
+                <p><%= clue.votes %></p>
+              </form>
+              <% } else { %>
+              <form
+                action="/<%= entry.borough %>/<%= entry.id %>/save/<%= clue.clueid %>"
+                method="POST"
+              >
+                <button type="submit">Save</button>
+                <p><%= clue.votes %></p>
+              </form>
+              <% } %>
               <p>
                 <%= clue.author %> on <%= new
                 Date(clue.submitted).toLocaleDateString("en-US") %>

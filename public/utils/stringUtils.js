@@ -2,19 +2,12 @@
  * Helper functions to manipulate strings
  */
 
-/* Hide all words in name except for first letter of
-   each word and/or a special exception word */
-function obfuscate(name, exception) {
-  const regex = new RegExp(exception, "i");
+/* Hide all words in name except for first letter
+   of each word */
+function obfuscate(name) {
   const dashed = name
     .split(" ")
-    .map((word) => {
-      if (word.match(regex)) {
-        return word;
-      } else {
-        return word[0] + word.slice(1).replace(/./g, "-");
-      }
-    })
+    .map((word) => word[0] + word.slice(1).replace(/./g, " _"))
     .join(" ");
   return dashed;
 }

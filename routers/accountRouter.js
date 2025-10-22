@@ -4,7 +4,14 @@ import { isAuth } from "../config/authMiddleware.js";
 
 const router = Router();
 
-router.get("/", isAuth, accountController.getDashboard);
-router.post("/delete/:clueid", isAuth, accountController.postDeleteClue);
+router.use(isAuth);
+
+router.get("/", (req, res) => {
+  res.redirect("/account/published");
+});
+router.get("/published", accountController.getPublished);
+router.get("/saved", accountController.getSaved);
+router.get("/solved", accountController.getSolved);
+router.post("/delete/:clueid", accountController.postDeleteClue);
 
 export default router;

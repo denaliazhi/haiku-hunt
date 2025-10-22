@@ -5,13 +5,29 @@ import pool from "../dbConnection.js";
 import format from "pg-format";
 
 /* Get clues for a landmark */
-async function getLandmarkClues(id) {
+async function getLandmarkClues(landmarkId) {
   const sql = `
   SELECT *
   FROM clues
   WHERE landmarkId = $1
+  ORDER BY votes DESC
   ;`;
-  const { rows } = await pool.query(sql, [id]);
+  const { rows } = await pool.query(sql, [landmarkId]);
+  return rows;
+}
+
+/* Get clues for a landmark, including whether
+   any clues have been saved by current user */
+async function getLandmarkCluesWithSaves(userId, landmarkId) {
+  const sql = `
+  SELECT c.*, s.userId AS is_saved
+  FROM clues c
+  LEFT JOIN saved_clues s 
+    ON c.clueId = s.clueId AND s.userId = $1
+  WHERE c.landmarkId = $2
+  ORDER BY c.votes DESC
+  ;`;
+  const { rows } = await pool.query(sql, [userId, landmarkId]);
   return rows;
 }
 
@@ -28,4 +44,4 @@ async function addClue(values) {
   }
 }
 
-export { getLandmarkClues, addClue };
+export { getLandmarkClues, getLandmarkCluesWithSaves, addClue };

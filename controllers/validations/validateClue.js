@@ -49,7 +49,7 @@ export const validateClue = [
     .custom((value) => {
       const count = syllable(value);
       if (count !== 5) {
-        throw new Error("Line 1 must have exactly 5 syllables");
+        throw new Error(`Line 1 must have 5 syllables, counted ${count}`);
       }
       return true;
     }),
@@ -61,7 +61,9 @@ export const validateClue = [
     .custom((value) => {
       const count = syllable(value);
       if (count !== 7) {
-        throw new Error("Line 2 must have exactly 7 syllables");
+        throw new Error(
+          `Line 2 must have exactly 7 syllables, counted ${count}`
+        );
       }
       return true;
     }),
@@ -73,7 +75,9 @@ export const validateClue = [
     .custom((value) => {
       const count = syllable(value);
       if (count !== 5) {
-        throw new Error("Line 3 must have exactly 5 syllables");
+        throw new Error(
+          `Line 3 must have exactly 5 syllables, counted ${count}`
+        );
       }
       return true;
     }),

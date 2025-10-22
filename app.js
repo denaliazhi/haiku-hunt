@@ -16,6 +16,7 @@ import landmarkRouter from "./routers/landmarkRouter.js";
 import accountRouter from "./routers/accountRouter.js";
 
 import { capitalizeAll, obfuscate } from "./public/utils/stringUtils.js";
+import { isAuth } from "./config/authMiddleware.js";
 
 /**
  * ---- General set-up ----

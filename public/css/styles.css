@@ -227,6 +227,16 @@ a.cta-btn {
   margin: auto;
 }
 
+/*  User Dashboard Elements */
+
+.dashboard-nav {
+  margin: 1rem 0 1.5rem;
+
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
 /* Search Result Elements */
 
 main {
