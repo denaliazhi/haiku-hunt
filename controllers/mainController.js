@@ -2,12 +2,8 @@ import passport from "passport";
 import bcrypt from "bcryptjs";
 import { validationResult, matchedData } from "express-validator";
 import { validateSignUp } from "./validations/validateSignUp.js";
-import {
-  getAllEntries,
-  filterByName,
-  filterByBorough,
-} from "../data/queries/dbLandmarks.js";
-import { addUser, getPublished } from "../data/queries/dbUsers.js";
+import { getAllEntries } from "../data/queries/dbLandmarks.js";
+import { addUser } from "../data/queries/dbUsers.js";
 
 const controller = {
   /* Render main page with all fountains */
@@ -18,29 +14,6 @@ const controller = {
     res.render("main", {
       title: "All Landmarks",
       entries: allFountains,
-      cardUrl: url,
-    });
-  },
-
-  /* Render main page with results after filtering fountains*/
-  getSearch: async (req, res) => {
-    let matches, title;
-    const url = req.url;
-
-    // Determine SQL query based on url parameter
-    const param = req.params.group;
-    if (param.match(/search/i)) {
-      const searchTerm = req.query.name;
-      matches = await filterByName(searchTerm);
-      title = `Landmarks with '${searchTerm}' in name`;
-    } else {
-      matches = await filterByBorough(param);
-      title = `Landmarks in ${param}`;
-    }
-
-    res.render("main", {
-      title: title,
-      entries: matches,
       cardUrl: url,
     });
   },
@@ -101,12 +74,6 @@ const controller = {
       if (err) return next(err);
       res.redirect("/");
     });
-  },
-
-  /* Render user's dashboard */
-  getDashboard: async (req, res, next) => {
-    const clues = await getPublished(req.user.userid);
-    res.render("user-dashboard", { clues: clues });
   },
 
   /* Render about page */

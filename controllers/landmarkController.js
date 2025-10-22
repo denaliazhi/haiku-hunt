@@ -1,9 +1,34 @@
 import { validationResult, matchedData } from "express-validator";
 import { validateClue } from "./validations/validateClue.js";
 import { addClue, getLandmarkClues } from "../data/queries/dbClues.js";
-import { getLandmark } from "../data/queries/dbLandmarks.js";
+import {
+  filterByBorough,
+  filterByName,
+  getLandmark,
+} from "../data/queries/dbLandmarks.js";
 
 const controller = {
+  /* Render landmarks based on filter criteria*/
+  getSearch: async (req, res) => {
+    let matches, title;
+
+    // Determine SQL query based on url parameter
+    const param = decodeURI(req.baseUrl).slice(1);
+    if (param.match(/search/i)) {
+      const searchTerm = req.query.name;
+      matches = await filterByName(searchTerm);
+      title = `Landmarks with '${searchTerm}' in name`;
+    } else {
+      matches = await filterByBorough(param);
+      title = `Landmarks in ${param}`;
+    }
+
+    res.render("main", {
+      title: title,
+      entries: matches,
+    });
+  },
+
   /* Render landmark details page */
   getDetails: async (req, res) => {
     const id = req.params.id;
