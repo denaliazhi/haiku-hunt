@@ -13,6 +13,7 @@ import ejsConfig from "./config/ejs.js";
 
 import mainRouter from "./routers/mainRouter.js";
 import landmarkRouter from "./routers/landmarkRouter.js";
+import accountRouter from "./routers/accountRouter.js";
 
 import { capitalizeAll, obfuscate } from "./public/utils/stringUtils.js";
 
@@ -70,6 +71,7 @@ app.use((req, res, next) => {
  */
 
 app.use("/", mainRouter);
+app.use("/account", accountRouter);
 app.use("/:group", landmarkRouter);
 
 app.use((err, req, res, next) => {

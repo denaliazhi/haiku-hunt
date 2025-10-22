@@ -32,4 +32,18 @@ async function getPublished(userId) {
   return rows;
 }
 
-export { addUser, findUser, getPublished };
+/* Delete clue with id */
+async function deleteClue(clueId) {
+  const sql = `
+    DELETE FROM clues c
+    WHERE clueId = $1
+  ;`;
+  try {
+    await pool.query(sql, [clueId]);
+  } catch (err) {
+    throw new Error("Error: the clue could not be deleted.");
+  }
+  return;
+}
+
+export { addUser, findUser, getPublished, deleteClue };

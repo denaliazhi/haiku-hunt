@@ -66,14 +66,14 @@ const controller = {
     validateClue,
     async (req, res) => {
       const id = req.params.id;
-      const backLink = `${req.baseUrl}/${req.params.id}`;
+      const backLink = `${req.baseUrl}/${id}`;
       const errors = validationResult(req);
 
       if (errors.isEmpty()) {
         // If valid, update clues table with new clue for landmark id
         await addClue([
-          req.user.userId,
-          req.params.id,
+          req.user.userid,
+          id,
           ...Object.values(matchedData(req)),
         ]);
         res.redirect(backLink);

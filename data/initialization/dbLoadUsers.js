@@ -23,8 +23,8 @@ const savedCluesQuery = `
     DROP TABLE IF EXISTS saved_clues;
 
     CREATE TABLE IF NOT EXISTS saved_clues (
-        userId INTEGER REFERENCES users(userId),
-        clueId INTEGER REFERENCES clues(clueId),
+        userId INTEGER REFERENCES users(userId) ON DELETE CASCADE,
+        clueId INTEGER REFERENCES clues(clueId) ON DELETE CASCADE,
         PRIMARY KEY(userId, clueId)
     );
 `;
@@ -34,8 +34,8 @@ const solvedLandmarksQuery = `
     DROP TABLE IF EXISTS solved_landmarks;
 
     CREATE TABLE IF NOT EXISTS solved_landmarks (
-        userId INTEGER REFERENCES users(userId),
-        landmarkId INTEGER REFERENCES landmarks(id),
+        userId INTEGER REFERENCES users(userId) ON DELETE CASCADE,
+        landmarkId INTEGER REFERENCES landmarks(id) ON DELETE CASCADE,
         PRIMARY KEY(userId, landmarkId)
     );
 `;

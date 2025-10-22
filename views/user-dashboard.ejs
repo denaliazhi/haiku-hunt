@@ -20,6 +20,15 @@
                 <p><%= clue.haiku_line_3 %></p>
               </div>
               <div class="clue-details">
+                <form action="/account/delete/<%= clue.clueid %>" method="POST">
+                  <button
+                    type="submit"
+                    onclick="return confirm(`Do you want to delete this clue? This action can't be undone.`)"
+                    ;
+                  >
+                    Delete
+                  </button>
+                </form>
                 <p>
                   <%= clue.author %> on <%= new
                   Date(clue.submitted).toLocaleDateString("en-US") %>
