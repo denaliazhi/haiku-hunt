@@ -1,5 +1,5 @@
 /**
- * Queries to interact with users table in SQL database.
+ * Queries to interact with user-related data in SQL database.
  */
 import pool from "../dbConnection.js";
 
@@ -21,4 +21,15 @@ async function addUser(username, password) {
   return rows;
 }
 
-export { addUser, findUser };
+/* Get all clues published by user */
+async function getPublished(userId) {
+  const sql = `
+    SELECT * FROM clues c
+    JOIN landmarks l ON c.landmarkId = l.id
+    WHERE userId = $1
+  ;`;
+  const { rows } = await pool.query(sql, [userId]);
+  return rows;
+}
+
+export { addUser, findUser, getPublished };

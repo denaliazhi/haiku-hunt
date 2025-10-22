@@ -7,7 +7,7 @@ import {
   filterByName,
   filterByBorough,
 } from "../data/queries/dbLandmarks.js";
-import { addUser } from "../data/queries/dbUsers.js";
+import { addUser, getPublished } from "../data/queries/dbUsers.js";
 
 const controller = {
   /* Render main page with all fountains */
@@ -90,8 +90,8 @@ const controller = {
 
   /* Authenticate user sign-in */
   postSignIn: passport.authenticate("local", {
-    successRedirect: "/", // TO DO: change to user dashboard
-    failureRedirect: "/sign-in", // TO DO: show error message
+    successRedirect: "/account",
+    failureRedirect: "/sign-in",
     failureMessage: true,
   }),
 
@@ -101,6 +101,12 @@ const controller = {
       if (err) return next(err);
       res.redirect("/");
     });
+  },
+
+  /* Render user's dashboard */
+  getDashboard: async (req, res, next) => {
+    const clues = await getPublished(req.user.userid);
+    res.render("user-dashboard", { clues: clues });
   },
 
   /* Render about page */

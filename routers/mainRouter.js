@@ -14,6 +14,8 @@ router.get("/sign-in", mainController.getSignIn);
 router.post("/sign-in", mainController.postSignIn);
 router.get("/sign-out", mainController.getSignOut);
 
+router.get("/account", isAuth, mainController.getDashboard);
+
 router.get("/about", mainController.getAbout);
 
 // TO DO: re-organize these routes
