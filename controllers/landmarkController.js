@@ -1,16 +1,20 @@
 import { validationResult, matchedData } from "express-validator";
 import { validateClue } from "./validations/validateClue.js";
-import {
-  addClue,
-  getLandmarkClues,
-  getLandmarkCluesWithSaves,
-} from "../data/queries/dbClues.js";
+import { validateGuess } from "./validations/validateGuess.js";
+import { addClue } from "../data/queries/dbClues.js";
 import {
   filterByBorough,
+  filterByBoroughUser,
   filterByName,
-  getLandmark,
+  filterByNameUser,
+  getLandmarkDetails,
+  getLandmarkDetailsUser,
 } from "../data/queries/dbLandmarks.js";
-import { saveClue, unsaveClue } from "../data/queries/dbUsers.js";
+import {
+  solveLandmark,
+  saveClue,
+  unsaveClue,
+} from "../data/queries/dbUsers.js";
 
 const controller = {
   /* Render landmarks based on filter criteria*/
@@ -21,14 +25,18 @@ const controller = {
     const param = decodeURI(req.baseUrl).slice(1);
     if (param.match(/search/i)) {
       const searchTerm = req.query.name;
-      matches = await filterByName(searchTerm);
+      matches = req.isAuthenticated()
+        ? await filterByNameUser(req.user.userid, searchTerm)
+        : await filterByName(searchTerm);
       title = `Landmarks with '${searchTerm}' in name`;
     } else {
-      matches = await filterByBorough(param);
+      matches = req.isAuthenticated()
+        ? await filterByBoroughUser(req.user.userid, param)
+        : await filterByBorough(param);
       title = `Landmarks in ${param}`;
     }
 
-    res.render("main", {
+    res.render("home-page", {
       title: title,
       entries: matches,
     });
@@ -38,14 +46,16 @@ const controller = {
   getDetails: async (req, res) => {
     const landmarkId = req.params.id;
     try {
-      const landmark = await getLandmark(landmarkId); // TO DO: is this more efficient if joined with below query?
-      const clues = req.isAuthenticated()
-        ? await getLandmarkCluesWithSaves(req.user.userid, landmarkId)
-        : await getLandmarkClues(landmarkId);
-      res.render("landmark", {
+      const result = req.isAuthenticated()
+        ? await getLandmarkDetailsUser(req.user.userid, landmarkId)
+        : await getLandmarkDetails(landmarkId);
+
+      res.render("landmark-details", {
         title: "The Deets",
-        entry: landmark[0],
-        clues: clues,
+        entry: result[0],
+        clues: result,
+        guessing: Boolean(req.query.guessing) ? true : false,
+        error: req.query.error,
       });
     } catch (err) {
       console.log(err);
@@ -100,7 +110,6 @@ const controller = {
     const backLink = `${req.baseUrl}/${req.params.id}`;
     if (req.isAuthenticated()) {
       try {
-        console.log("Saving...");
         await saveClue(req.user.userid, req.params.clueid);
         res.redirect(backLink);
       } catch (err) {
@@ -124,6 +133,38 @@ const controller = {
       res.status(400).redirect(backLink);
     }
   },
+
+  /* Render field for user to submit guess for landmark */
+  getSolveLandmark: async (req, res) => {
+    const backLink = `${req.baseUrl}/${req.params.id}`;
+    res.redirect(`${backLink}?guessing=true`);
+  },
+
+  /* Check if user's guess for landmark is correct */
+  postSolveLandmark: [
+    (req, res, next) => {
+      if (req.isAuthenticated()) {
+        next();
+      } else {
+        res.redirect("/sign-up");
+      }
+    },
+    validateGuess,
+    async (req, res) => {
+      const landmarkId = req.params.id;
+      const backLink = `${req.baseUrl}/${landmarkId}`;
+      const errors = validationResult(req);
+
+      if (errors.isEmpty()) {
+        // Guess is correct. Render page with solve status
+        await solveLandmark(req.user.userid, landmarkId);
+        res.redirect(backLink);
+      } else {
+        // Guess is incorrect. Re-render page with error message
+        res.redirect(`${backLink}?guessing=true&error=true`);
+      }
+    },
+  ],
 };
 
 export default controller;

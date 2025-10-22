@@ -11,11 +11,32 @@
         <p>
           <a href="/<%= entry.borough %>"><%= entry.borough %></a>
         </p>
-        <% if (entry.solved) { %>
+        <% if (entry.is_solved) { %>
         <h1><%= entry.name %></h1>
-        <% } else { %>
+        <p>Solved</p>
+
+        <% } else if (!guessing) { %>
         <h1><%= obfuscate(entry.name) %></h1>
-        <% } %>
+        <a href="/<%= entry.borough %>/<%= entry.id %>/solve">Take a guess</a>
+
+        <% } else { %>
+        <form
+          action="/<%= entry.borough %>/<%= entry.id %>/solve?name=<%= entry.name %>"
+          method="POST"
+        >
+          <input
+            aria-label="Guess for landmark name"
+            name="guess"
+            type="text"
+            maxlength="50"
+            placeholder="<%= obfuscate(entry.name) %>"
+          />
+          <button type="submit">Submit</button>
+          <a href="/<%= entry.borough %>/<%= entry.id %>">Cancel</a>
+        </form>
+        <% if (error) { %>
+        <p>Sorry, that's not it.</p>
+        <% } %> <% } %>
         <div class="categories">
           <% entry.categories ? entry.categories.split(",").map(category => { %>
           <p><%= category.trim() %></p>
@@ -44,7 +65,7 @@
           <a href="/<%= entry.borough %>/<%= entry.id %>/add">
             <div class="clue-card empty"><p>+ Add a clue</p></div>
           </a>
-          <% clues ? clues.map((clue) => { %>
+          <% clues[0].clueid ? clues.map((clue) => { %>
           <div class="clue-card">
             <div>
               <p><%= clue.haiku_line_1 %></p>

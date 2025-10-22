@@ -1,0 +1,43 @@
+<div class="clue-container">
+  <% clues ? clues.map((clue) => { %>
+  <a href="/<%= clue.borough %>/<%= clue.id %>/">
+    <div class="clue-card">
+      <div>
+        <p><%= clue.haiku_line_1 %></p>
+        <p><%= clue.haiku_line_2 %></p>
+        <p><%= clue.haiku_line_3 %></p>
+      </div>
+      <div class="clue-details">
+        <% if (selectedTab === 'published') {%>
+        <form action="/account/delete/<%= clue.clueid %>" method="POST">
+          <button
+            type="submit"
+            onclick="return confirm(`Delete this clue? This action can't be undone.`)"
+            ;
+          >
+            Delete
+          </button>
+        </form>
+        <% } else if (selectedTab === 'saved') { %>
+        <form
+          action="/<%= clue.borough %>/<%= clue.id %>/unsave/<%= clue.clueid %>"
+          method="POST"
+        >
+          <button
+            type="submit"
+            onclick="return confirm(`Remove this clue from your collection?`)"
+            ;
+          >
+            Saved
+          </button>
+        </form>
+        <% } %>
+        <p>
+          <%= clue.author %> on <%= new
+          Date(clue.submitted).toLocaleDateString("en-US") %>
+        </p>
+      </div>
+    </div>
+  </a>
+  <% }) : null %>
+</div>

@@ -8,55 +8,16 @@
         <p>Welcome back, <%= currentUser.username %></p>
         <p><%= message %></p>
       </div>
-      <nav class="dashboard-nav">
-        <a
-          class="cta-btn <%= selectedTab === 'published' ? 'selected' : ''%>"
-          href="/account/published"
-          >Published</a
-        >
-        <a
-          class="cta-btn <%= selectedTab === 'saved' ? 'selected' : ''%>"
-          href="/account/saved"
-          >Favorites</a
-        >
-        <a
-          class="cta-btn <%= selectedTab === 'solved' ? 'selected' : ''%>"
-          href="/account/solved"
-          >Solved</a
-        >
-      </nav>
+      <%- include("./partials/dashboard-nav.ejs", {selectedTab}); %>
       <article class="card-details">
         <h1><%= tabTitle %></h1>
-        <div class="clue-container">
-          <% clues ? clues.map((clue) => { %>
-          <a href="/<%= clue.borough %>/<%= clue.id %>/">
-            <div class="clue-card">
-              <div>
-                <p><%= clue.haiku_line_1 %></p>
-                <p><%= clue.haiku_line_2 %></p>
-                <p><%= clue.haiku_line_3 %></p>
-              </div>
-              <div class="clue-details">
-                <% if (selectedTab === 'published') {%>
-                <form action="/account/delete/<%= clue.clueid %>" method="POST">
-                  <button
-                    type="submit"
-                    onclick="return confirm(`Do you want to delete this clue? This action can't be undone.`)"
-                    ;
-                  >
-                    Delete
-                  </button>
-                </form>
-                <% } %>
-                <p>
-                  <%= clue.author %> on <%= new
-                  Date(clue.submitted).toLocaleDateString("en-US") %>
-                </p>
-              </div>
-            </div>
-          </a>
-          <% }) : null %>
+        <% if (selectedTab === 'solved') { %>
+        <div class="card-container">
+          <% clues.map(clue => { %> <%- include("./partials/landmark-card.ejs",
+          {entry: clue}) %> <% }) %>
         </div>
+        <% } else { %> <%- include("./partials/dashboard-tabs.ejs",
+        {selectedTab, clues}); %> <% } %>
       </article>
     </main>
   </body>

@@ -2,18 +2,23 @@ import passport from "passport";
 import bcrypt from "bcryptjs";
 import { validationResult, matchedData } from "express-validator";
 import { validateSignUp } from "./validations/validateSignUp.js";
-import { getAllEntries } from "../data/queries/dbLandmarks.js";
+import {
+  getAllEntries,
+  getAllEntriesUser,
+} from "../data/queries/dbLandmarks.js";
 import { addUser } from "../data/queries/dbUsers.js";
 
 const controller = {
-  /* Render main page with all fountains */
+  /* Render home page with all landmarks */
   getAll: async (req, res) => {
     const url = req.url;
 
-    const allFountains = await getAllEntries();
-    res.render("main", {
+    const allLandmarks = req.isAuthenticated()
+      ? await getAllEntriesUser(req.user.userid)
+      : await getAllEntries();
+    res.render("home-page", {
       title: "All Landmarks",
-      entries: allFountains,
+      entries: allLandmarks,
       cardUrl: url,
     });
   },

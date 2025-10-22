@@ -10,5 +10,7 @@ router.get("/:id/add", landmarkController.getAddClue);
 router.post("/:id/add", isAuth, landmarkController.postAddClue);
 router.post("/:id/save/:clueid", landmarkController.postSaveClue);
 router.post("/:id/unsave/:clueid", isAuth, landmarkController.postUnsaveClue);
+router.get("/:id/solve", landmarkController.getSolveLandmark);
+router.post("/:id/solve", landmarkController.postSolveLandmark);
 
 export default router;

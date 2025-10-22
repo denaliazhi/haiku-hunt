@@ -162,6 +162,13 @@ nav li:hover {
   box-shadow: 0 4px 4px 0 rgba(var(--shadow), 0.25);
 }
 
+.sidebar ul a:last-of-type > li {
+  text-align: left;
+  margin-top: 1rem;
+  box-shadow: none;
+  background-color: transparent;
+}
+
 /* Top Navigation Elements */
 
 .top-nav {
@@ -529,6 +536,10 @@ main > h1,
     max-width: 100%;
     min-height: fit-content;
     gap: 0;
+  }
+
+  .sidebar ul a:last-of-type > li {
+    margin-top: 0;
   }
 
   .top-nav {

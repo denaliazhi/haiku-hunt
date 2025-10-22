@@ -3,6 +3,8 @@
  */
 import pool from "../dbConnection.js";
 import format from "pg-format";
+import { upVote, downVote } from "./dbClues.js";
+import { baseQuery } from "./dbLandmarks.js";
 
 /* Find user by username */
 async function findUser(username) {
@@ -48,9 +50,22 @@ async function getSaved(userId) {
 /* Get all landmarks solved by user */
 async function getSolved(userId) {
   const sql = `
-    SELECT * FROM clues c
-    JOIN solved_landmarks s ON c.landmarkId = s.landmarkId
-    WHERE s.userId = $1
+  WITH solved AS (
+    SELECT l.id, l.name, l.borough, sl.userId as is_solved
+    FROM landmarks l
+    JOIN solved_landmarks sl ON l.id = sl.landmarkId
+    WHERE sl.userId = $1
+  ),
+  ranked_clues AS (
+    SELECT c.*, ROW_NUMBER() OVER (PARTITION BY c.landmarkId ORDER BY c.votes DESC) AS ranking
+    FROM clues c
+    JOIN solved_landmarks sl ON c.landmarkId = sl.landmarkId
+    WHERE sl.userId = $1
+  )
+  SELECT *
+  FROM solved s 
+  LEFT JOIN ranked_clues rc ON s.id = rc.landmarkId
+  WHERE rc.ranking = 1 OR rc.ranking IS NULL
   ;`;
   const { rows } = await pool.query(sql, [userId]);
   return rows;
@@ -84,15 +99,7 @@ async function saveClue(userId, clueId) {
   }
   // Increment total votes for clue
   if (result.rowCount === 1) {
-    sql = `UPDATE clues SET votes = votes + 1 WHERE clueId = $1;`;
-    try {
-      result = await pool.query(sql, [clueId]);
-    } catch (err) {
-      console.log(
-        "The clue was saved, but total votes could not be updated: ",
-        err
-      );
-    }
+    upVote(clueId);
   }
 }
 
@@ -110,15 +117,20 @@ async function unsaveClue(userId, clueId) {
   }
   // Decrement total votes for clue
   if (result.rowCount === 1) {
-    sql = `UPDATE clues SET votes = votes - 1 WHERE clueId = $1;`;
-    try {
-      result = await pool.query(sql, [clueId]);
-    } catch (err) {
-      console.log(
-        "The clue was unsaved, but total votes could not be updated: ",
-        err
-      );
-    }
+    downVote(clueId);
+  }
+}
+
+/* Credit solved landmark to user */
+async function solveLandmark(userId, landmarkId) {
+  const sql = `
+    INSERT INTO solved_landmarks VALUES %L
+    ON CONFLICT DO NOTHING
+  ;`;
+  try {
+    await pool.query(format(sql, [[userId, landmarkId]]));
+  } catch (err) {
+    throw new Error("Failed to update landmark's status");
   }
 }
 
@@ -131,4 +143,5 @@ export {
   deleteClue,
   saveClue,
   unsaveClue,
+  solveLandmark,
 };
