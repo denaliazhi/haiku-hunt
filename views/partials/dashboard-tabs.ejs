@@ -13,9 +13,9 @@
           <button
             type="submit"
             onclick="return confirm(`Delete this clue? This action can't be undone.`)"
-            ;
+            aria-label="Delete haiku"
           >
-            Delete
+            <img class="icon" src="/icons/trash-black.png" alt="Trash can" />
           </button>
         </form>
         <% } else if (selectedTab === 'saved') { %>

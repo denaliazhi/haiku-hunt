@@ -1,7 +1,9 @@
 <% if (currentUser) { %>
 <div class="top-nav">
-  <a href="/account">Account</a>
   <a href="/sign-out">Sign out</a>
+  <a class="account-btn" href="/account"
+    ><img class="icon" src="/icons/user-color.png" alt="Your account"
+  /></a>
 </div>
 <% } else { %>
 <div class="top-nav">
@@ -20,7 +22,9 @@
       <form action="/search" method="GET">
         <label for="name">Find a landmark</label>
         <input type="text" name="name" />
-        <button type="submit" aria-label="search">&gt;</button>
+        <button class="search-btn" type="submit">
+          <img class="icon" src="/icons/search-white.png" alt="Search" />
+        </button>
       </form>
       <div>
         <p>By borough</p>
@@ -29,7 +33,7 @@
           <a href="/<%= option.borough %>"
             ><li><%= capitalizeAll(option.borough) %></li></a
           >
-          <% }); %><a href="/all"><li>Show All</li></a>
+          <% }); %><a href="/all"><li id="show-all-btn">Show All</li></a>
         </ul>
       </div>
     </nav>

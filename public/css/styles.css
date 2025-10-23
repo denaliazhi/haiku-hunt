@@ -44,6 +44,9 @@ a:visited {
 }
 
 button {
+  font-family: "DM Sans";
+  font-size: 1rem;
+
   background: none;
   border: none;
 }
@@ -72,6 +75,15 @@ input {
 .blurred {
   color: black;
   filter: blur(0.7rem);
+}
+
+.icon {
+  height: 1rem;
+  width: 1rem;
+}
+
+.icon:hover {
+  cursor: pointer;
 }
 
 /* Sidebar Elements */
@@ -113,21 +125,26 @@ header form {
   position: relative;
 }
 
-header form button {
-  color: white;
+.search-btn {
   position: absolute;
   height: 1.8rem;
   width: 1.8rem;
 
   background-color: rgb(var(--accent));
   border-radius: 50%;
+  border: 2px solid transparent;
 
   bottom: 1px;
   right: -0.2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-header form button:hover {
+button.search-btn:hover {
   cursor: pointer;
+  border: 2px solid white;
 }
 
 nav {
@@ -162,7 +179,7 @@ nav li:hover {
   box-shadow: 0 4px 4px 0 rgba(var(--shadow), 0.25);
 }
 
-.sidebar ul a:last-of-type > li {
+#show-all-btn {
   text-align: left;
   margin-top: 1rem;
   box-shadow: none;
@@ -174,7 +191,7 @@ nav li:hover {
 .top-nav {
   grid-area: top;
 
-  padding: 1rem 1rem 0 0;
+  padding: 1rem 1.5rem 0 0;
 
   display: flex;
   justify-content: right;
@@ -184,9 +201,6 @@ nav li:hover {
 }
 
 .cta-btn {
-  font-family: "DM Sans";
-  font-size: 1rem;
-
   padding: 0.5rem 1.2rem;
   width: fit-content;
 
@@ -196,6 +210,10 @@ nav li:hover {
 
 a.cta-btn {
   color: white;
+}
+
+.account-btn {
+  display: flex;
 }
 
 /* Sign-In / Sign-Up Elements */
@@ -237,11 +255,24 @@ a.cta-btn {
 /*  User Dashboard Elements */
 
 .dashboard-nav {
-  margin: 1rem 0 1.5rem;
+  color: rgb(var(--dark-main));
+  margin: 1rem 0 -0.3rem;
 
   display: flex;
   flex-direction: row;
   gap: 1rem;
+}
+
+.dashboard-nav a:not(.selected) {
+  opacity: 0.7;
+  background-color: transparent;
+}
+
+.selected {
+  padding-bottom: 0.8rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: rgb(var(--background));
 }
 
 /* Search Result Elements */
@@ -255,6 +286,11 @@ main {
 
 .page-header {
   margin-bottom: 2rem;
+}
+
+.page-header > p + p {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
 }
 
 main > h1,
@@ -304,13 +340,60 @@ main > h1,
 .card-details h1 {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1rem;
 }
 
 .card-details h2 {
   font-size: 1.1rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
+}
+
+.landmark-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.landmark-header form {
+  width: 35rem;
+}
+
+.landmark-header input {
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.guess-btn,
+.submit-guess-btn {
+  padding: 0.5rem 1rem;
+
+  border: 1px solid rgb(var(--accent));
+  border-radius: var(--extra-rounded);
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  transition: background-color 100ms ease-in-out;
+}
+
+.guess-btn:hover,
+.submit-guess-btn:hover {
+  background-color: rgba(var(--accent), 0.1);
+}
+
+.solved {
+  color: #5b7b5b;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  background: #bedbbe;
+  border-radius: var(--extra-rounded);
+
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .landmark-facts {
@@ -324,7 +407,7 @@ main > h1,
 }
 
 .categories {
-  margin-bottom: 1rem;
+  margin: 1rem 0 1.5rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
@@ -393,6 +476,16 @@ main > h1,
 .clue-details {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.save-btn {
+  display: flex;
+}
+
+.total-votes {
+  margin-right: auto;
 }
 
 .clue-details p:last-of-type {
@@ -538,7 +631,7 @@ main > h1,
     gap: 0;
   }
 
-  .sidebar ul a:last-of-type > li {
+  #show-all-btn {
     margin-top: 0;
   }
 
@@ -574,7 +667,8 @@ main > h1,
     padding: 2rem;
   }
 
-  .page-header {
+  .landmark-header {
+    gap: 1rem;
     margin-bottom: 1rem;
   }
 
@@ -604,7 +698,8 @@ main > h1,
     grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
   }
 
-  .errors {
+  .sign-up .errors,
+  .sign-in .errors {
     padding: 0 2rem;
   }
 }

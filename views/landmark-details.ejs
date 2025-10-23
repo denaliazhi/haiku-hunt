@@ -12,30 +12,49 @@
           <a href="/<%= entry.borough %>"><%= entry.borough %></a>
         </p>
         <% if (entry.is_solved) { %>
-        <h1><%= entry.name %></h1>
-        <p>Solved</p>
+        <div class="landmark-header">
+          <h1><%= entry.name %></h1>
+          <p class="solved">
+            Solved<img
+              class="icon"
+              src="/icons/confetti-green.png"
+              alt="Confetti"
+            />
+          </p>
+        </div>
 
         <% } else if (!guessing) { %>
-        <h1><%= obfuscate(entry.name) %></h1>
-        <a href="/<%= entry.borough %>/<%= entry.id %>/solve">Take a guess</a>
-
+        <div class="landmark-header">
+          <h1><%= obfuscate(entry.name) %></h1>
+          <a
+            class="guess-btn"
+            href="/<%= entry.borough %>/<%= entry.id %>/solve"
+            ><img class="icon" src="/icons/pencil-black.png" alt="Pencil" />
+            <p>Take a guess</p></a
+          >
+        </div>
         <% } else { %>
-        <form
-          action="/<%= entry.borough %>/<%= entry.id %>/solve?name=<%= entry.name %>"
-          method="POST"
-        >
-          <input
-            aria-label="Guess for landmark name"
-            name="guess"
-            type="text"
-            maxlength="50"
-            placeholder="<%= obfuscate(entry.name) %>"
-          />
-          <button type="submit">Submit</button>
+        <div class="landmark-header">
+          <form
+            id="guess-form"
+            action="/<%= entry.borough %>/<%= entry.id %>/solve?name=<%= entry.name %>"
+            method="POST"
+          >
+            <input
+              aria-label="Guess for landmark name"
+              name="guess"
+              type="text"
+              maxlength="50"
+              placeholder="<%= obfuscate(entry.name) %>"
+            />
+          </form>
+          <button class="submit-guess-btn" form="guess-form" type="submit">
+            Submit
+          </button>
           <a href="/<%= entry.borough %>/<%= entry.id %>">Cancel</a>
-        </form>
+        </div>
         <% if (error) { %>
-        <p>Sorry, that's not it.</p>
+        <p class="errors">Sorry, that's not it.</p>
         <% } %> <% } %>
         <div class="categories">
           <% entry.categories ? entry.categories.split(",").map(category => { %>
@@ -65,41 +84,10 @@
           <a href="/<%= entry.borough %>/<%= entry.id %>/add">
             <div class="clue-card empty"><p>+ Add a clue</p></div>
           </a>
-          <% clues[0].clueid ? clues.map((clue) => { %>
-          <div class="clue-card">
-            <div>
-              <p><%= clue.haiku_line_1 %></p>
-              <p><%= clue.haiku_line_2 %></p>
-              <p><%= clue.haiku_line_3 %></p>
-            </div>
-            <div class="clue-details">
-              <% if (clue.is_saved) { %>
-              <form
-                action="/<%= entry.borough %>/<%= entry.id %>/unsave/<%= clue.clueid %>"
-                method="POST"
-              >
-                <button type="submit">Saved</button>
-                <p><%= clue.votes %></p>
-              </form>
-              <% } else { %>
-              <form
-                action="/<%= entry.borough %>/<%= entry.id %>/save/<%= clue.clueid %>"
-                method="POST"
-              >
-                <button type="submit">Save</button>
-                <p><%= clue.votes %></p>
-              </form>
-              <% } %>
-              <p>
-                <%= clue.author %> on <%= new
-                Date(clue.submitted).toLocaleDateString("en-US") %>
-              </p>
-            </div>
-          </div>
-          <% }) : null %>
+          <% clues[0].clueid ? clues.map((clue) => { %> <%-
+          include("./partials/clue-card.ejs", {entry, clue}) %> <% }) : null %>
         </div>
       </article>
     </main>
-    <!-- <script type="module" src="../eventHandlers/voteHandler.js"></script> -->
   </body>
 </html>
