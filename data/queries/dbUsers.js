@@ -134,6 +134,16 @@ async function solveLandmark(userId, landmarkId) {
   }
 }
 
+/* Check if user has solved landmark */
+async function checkSolved(userId, landmarkId) {
+  const sql = `
+    SELECT * FROM solved_landmarks
+    WHERE userId = $1 AND landmarkId = $2
+  ;`;
+  const { rows } = await pool.query(sql, [userId, landmarkId]);
+  return rows;
+}
+
 export {
   addUser,
   findUser,
@@ -144,4 +154,5 @@ export {
   saveClue,
   unsaveClue,
   solveLandmark,
+  checkSolved,
 };

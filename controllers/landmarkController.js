@@ -14,6 +14,7 @@ import {
   solveLandmark,
   saveClue,
   unsaveClue,
+  checkSolved,
 } from "../data/queries/dbUsers.js";
 
 const controller = {
@@ -64,14 +65,26 @@ const controller = {
   },
 
   /* Render form to add a haiku clue */
-  getAddClue: (req, res) => {
+  getAddClue: async (req, res) => {
+    const backLink = `${req.baseUrl}/${req.params.id}`;
     if (req.isAuthenticated()) {
-      const backLink = `${req.baseUrl}/${req.params.id}`;
-      res.render("clue-form", {
-        errors: null,
-        formEntry: null,
-        backLink: backLink,
-      });
+      const isSolved = await checkSolved(req.user.userid, req.params.id);
+      if (isSolved.length === 1) {
+        // User has solved landmark and can add a clue
+        res.render("clue-form", {
+          errors: null,
+          formEntry: null,
+          backLink: backLink,
+        });
+      } else {
+        console.log("Hereee!");
+        // User hasn't solved the landmark yet
+        res.redirect(
+          `${backLink}?guessing=true&error=${encodeURI(
+            "To submit a clue, solve the landmark first."
+          )}`
+        );
+      }
     } else {
       // Only registered users can add clues
       res.redirect("/sign-up");
@@ -161,7 +174,11 @@ const controller = {
         res.redirect(backLink);
       } else {
         // Guess is incorrect. Re-render page with error message
-        res.redirect(`${backLink}?guessing=true&error=true`);
+        res.redirect(
+          `${backLink}?guessing=true&error=${encodeURI(
+            "Sorry, that's not it."
+          )}`
+        );
       }
     },
   ],
