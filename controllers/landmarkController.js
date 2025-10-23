@@ -36,7 +36,7 @@ const controller = {
       title = `Landmarks in ${param}`;
     }
 
-    res.render("home-page", {
+    res.render("index", {
       title: title,
       entries: matches,
     });

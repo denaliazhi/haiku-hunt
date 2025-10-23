@@ -1,0 +1,58 @@
+<!-- Interactive header on landmark details page -->
+
+<% if (entry.is_solved) { %>
+    <div class="landmark-header">
+        <h1><%= entry.name %></h1>
+        <div class="solved">
+            <p>Solved</p>
+            <img
+            class="icon"
+            src="/icons/confetti-green.png"
+            alt="Confetti"
+            />
+        </div>
+    </div>
+
+<% } else if (!guessing) { %>
+    <div class="landmark-header">
+        <h1><%= obfuscate(entry.name) %></h1>
+        <a
+        class="guess-btn"
+        href="/<%= entry.borough %>/<%= entry.id %>/solve"
+        >
+            <img 
+            class="icon"
+            src="/icons/pencil-black.png" 
+            alt="Pencil" />
+            <p>Take a guess</p>
+        </a>
+    </div>
+
+<% } else { %>
+    <div class="landmark-header">
+        <form
+        id="guess-form"
+        action="/<%= entry.borough %>/<%= entry.id %>/solve?name=<%= entry.name %>"
+        method="POST"
+        >
+            <input
+            aria-label="Guess for landmark name"
+            name="guess"
+            type="text"
+            maxlength="50"
+            placeholder="<%= obfuscate(entry.name) %>"
+            />
+        </form>
+        <button
+        class="submit-guess-btn"
+        form="guess-form"
+        type="submit">
+            Submit
+        </button>
+        <a href="/<%= entry.borough %>/<%= entry.id %>">Cancel</a>
+    </div>
+
+    <% if (error) { %>
+        <p class="errors">Sorry, that's not it.</p>
+    <% } %> 
+<% } %>

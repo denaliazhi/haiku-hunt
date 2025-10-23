@@ -1,38 +1,25 @@
-<div class="clue-card">
-  <div>
-    <p><%= clue.haiku_line_1 %></p>
-    <p><%= clue.haiku_line_2 %></p>
-    <p><%= clue.haiku_line_3 %></p>
-  </div>
-  <div class="clue-details">
-    <% if (clue.is_saved) { %>
-    <form
-      action="/<%= entry.borough %>/<%= entry.id %>/unsave/<%= clue.clueid %>"
-      method="POST"
-    >
-      <button class="save-btn" type="submit">
-        <img class="icon" src="/icons/saved.png" alt="Unsave clue" />
-      </button>
-    </form>
-    <p class="total-votes" aria-label="Total saves by users">
-      <%= clue.votes %>
-    </p>
-    <% } else { %>
-    <form
-      action="/<%= entry.borough %>/<%= entry.id %>/save/<%= clue.clueid %>"
-      method="POST"
-    >
-      <button class="save-btn" type="submit">
-        <img class="icon" src="/icons/not-saved.png" alt="Save clue" />
-      </button>
-    </form>
-    <p class="total-votes" aria-label="Total saves by users">
-      <%= clue.votes %>
-    </p>
+<!-- Overview element for a clue,
+     linking to its corresponding landmark's page -->
+
+<a href="/<%= clue.borough %>/<%= clue.id %>/">
+  <div class="clue-card">
+    <div>
+      <p><%= clue.haiku_line_1 %></p>
+      <p><%= clue.haiku_line_2 %></p>
+      <p><%= clue.haiku_line_3 %></p>
+    </div>
+    <% if (showTool !== 'none') { %>
+    <div class="clue-toolbar">
+      <% if (showTool === 'delete') {%> 
+        <%- include ("./delete-btn.ejs", {clue}) %>
+      <% } else if (showTool === 'save') { %> 
+        <%- include ("./save-btn.ejs", {clue}) %> 
+      <% } %>
+      <p>
+        <%= clue.author %> on <%= new
+        Date(clue.submitted).toLocaleDateString("en-US") %>
+      </p>
+    </div>
     <% } %>
-    <p>
-      <%= clue.author %> on <%= new
-      Date(clue.submitted).toLocaleDateString("en-US") %>
-    </p>
   </div>
-</div>
+</a>

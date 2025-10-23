@@ -16,7 +16,7 @@ const controller = {
     const allLandmarks = req.isAuthenticated()
       ? await getAllEntriesUser(req.user.userid)
       : await getAllEntries();
-    res.render("home-page", {
+    res.render("index", {
       title: "All Landmarks",
       entries: allLandmarks,
       cardUrl: url,

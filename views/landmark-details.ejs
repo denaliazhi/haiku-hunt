@@ -1,3 +1,6 @@
+<!-- This page shows details for a landmark and allows
+     the user to guess the landmark's name -->
+
 <!DOCTYPE html>
 <html lang="en">
   <%- include("./partials/head.ejs") %>
@@ -7,60 +10,21 @@
       <div class="page-header">
         <h1><%= title %></h1>
       </div>
-      <article class="card-details">
-        <p>
-          <a href="/<%= entry.borough %>"><%= entry.borough %></a>
-        </p>
-        <% if (entry.is_solved) { %>
-        <div class="landmark-header">
-          <h1><%= entry.name %></h1>
-          <p class="solved">
-            Solved<img
-              class="icon"
-              src="/icons/confetti-green.png"
-              alt="Confetti"
-            />
-          </p>
-        </div>
 
-        <% } else if (!guessing) { %>
-        <div class="landmark-header">
-          <h1><%= obfuscate(entry.name) %></h1>
-          <a
-            class="guess-btn"
-            href="/<%= entry.borough %>/<%= entry.id %>/solve"
-            ><img class="icon" src="/icons/pencil-black.png" alt="Pencil" />
-            <p>Take a guess</p></a
-          >
-        </div>
-        <% } else { %>
-        <div class="landmark-header">
-          <form
-            id="guess-form"
-            action="/<%= entry.borough %>/<%= entry.id %>/solve?name=<%= entry.name %>"
-            method="POST"
-          >
-            <input
-              aria-label="Guess for landmark name"
-              name="guess"
-              type="text"
-              maxlength="50"
-              placeholder="<%= obfuscate(entry.name) %>"
-            />
-          </form>
-          <button class="submit-guess-btn" form="guess-form" type="submit">
-            Submit
-          </button>
-          <a href="/<%= entry.borough %>/<%= entry.id %>">Cancel</a>
-        </div>
-        <% if (error) { %>
-        <p class="errors">Sorry, that's not it.</p>
-        <% } %> <% } %>
+      <article class="card-details">
+        <a href="/<%= entry.borough %>">
+          <p><%= entry.borough %></p>
+        </a>
+        <%- include("./partials/landmark-header.ejs", {entry, guessing}) %>
+
         <div class="categories">
-          <% entry.categories ? entry.categories.split(",").map(category => { %>
-          <p><%= category.trim() %></p>
-          <% }) : null %>
+          <% if (entry.categories) {
+              entry.categories.split(",").map(category => { %>
+                <p><%= category.trim() %></p>
+            <% }
+          )} %>
         </div>
+        
         <div class="landmark-facts">
           <div>
             <h2>Location</h2>
@@ -78,15 +42,18 @@
             <p><%= entry.architect ? entry.architect : "Not available" %></p>
           </div>
         </div>
+
         <hr />
         <h2>Haiku clues</h2>
         <div class="clue-container">
-          <a href="/<%= entry.borough %>/<%= entry.id %>/add">
-            <div class="clue-card empty"><p>+ Add a clue</p></div>
-          </a>
-          <% clues[0].clueid ? clues.map((clue) => { %> <%-
-          include("./partials/clue-card.ejs", {entry, clue}) %> <% }) : null %>
+          <%- include("./partials/blank-clue-card.ejs", {entry, message: '+ Add a clue'}) %> 
+          <% if (clues[0].clueid) {
+              clues.map((clue) => { %> 
+                <%- include("./partials/clue-card.ejs", {entry, clue}) %> 
+          <%  }) 
+            } %>
         </div>
+
       </article>
     </main>
   </body>

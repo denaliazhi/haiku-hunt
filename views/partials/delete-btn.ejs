@@ -1,0 +1,11 @@
+<!-- Delete button for a clue card -->
+
+<form action="/account/delete/<%= clue.clueid %>" method="POST">
+  <button
+    type="submit"
+    onclick="return confirm(`Delete this clue? This action can't be undone.`)"
+    aria-label="Delete haiku"
+  >
+    <img class="icon" src="/icons/trash-black.png" alt="Trash can" />
+  </button>
+</form>

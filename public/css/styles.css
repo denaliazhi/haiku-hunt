@@ -473,7 +473,7 @@ main > h1,
   box-shadow: none;
 }
 
-.clue-details {
+.clue-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -488,7 +488,7 @@ main > h1,
   margin-right: auto;
 }
 
-.clue-details p:last-of-type {
+.clue-toolbar p:last-of-type {
   font-size: 0.8rem;
 }
 

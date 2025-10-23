@@ -1,20 +1,22 @@
+<!-- Overview element for a landmark,
+     linking to its details page -->
+
 <div class="card">
   <a href="/<%= entry.borough %>/<%= entry.id %>">
+    
     <p class="small-text"><%= capitalizeAll(entry.borough) %></p>
+
     <% if (entry.is_solved) { %>
-    <h2><%= entry.name %></h2>
+      <h2><%= entry.name %></h2>
     <% } else { %>
-    <h2 class="blurred">Anti-cheating dummy text</h2>
-    <% } %> <% if (entry.haiku_line_1) { %>
-    <div class="clue-card">
-      <div>
-        <p><%= entry.haiku_line_1 %></p>
-        <p><%= entry.haiku_line_2 %></p>
-        <p><%= entry.haiku_line_3 %></p>
-      </div>
-    </div>
+      <h2 class="blurred">Anti-cheating dummy text</h2>
+    <% } %> 
+
+    <% if (entry.haiku_line_1) { %>
+      <%- include ("./clue-card.ejs", {clue: entry, showTool: 'none'}) %> 
     <% } else { %>
-    <div class="clue-card empty"><p>No clues yet</p></div>
+      <%- include("./blank-clue-card.ejs", {entry, message: 'No clues yet'}) %> 
     <% } %>
+
   </a>
 </div>

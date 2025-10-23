@@ -1,3 +1,4 @@
+<!-- This page accepts user-submitted haiku clues for a landmark -->
 <!DOCTYPE html>
 <html lang="en">
   <%- include("./partials/head.ejs"); %>
@@ -7,9 +8,11 @@
       <div class="page-header">
         <h1>Add Your Clue</h1>
       </div>
+
       <article class="card-details clue-form">
         <a class="back-btn" href="<%= backLink %>">&lt; Back</a>
         <h1>Write a haiku</h1>
+
         <form action="<%= backLink %>/add" method="POST">
           <p>Guide others to this landmark through a 17 syllable poem.</p>
           <div class="haiku-fields">
@@ -60,6 +63,7 @@
               value="<%= formEntry ? formEntry['author']: currentUser.username %>"
             />
           </div>
+
           <% if (errors) { %>
           <div class="errors">
             <ul>
@@ -69,6 +73,7 @@
             </ul>
           </div>
           <% } %>
+
           <button class="cta-btn" type="submit">Publish</button>
         </form>
       </article>

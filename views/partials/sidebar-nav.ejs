@@ -1,0 +1,32 @@
+<!-- Sidebar element which combines the page header and footer -->
+
+<div class="side-bar">
+  <header>
+    <div>
+      <div class="site-name"><a href="/">Haiku Hunt</a></div>
+      <p>A poetic search for landmarks in NYC</p>
+    </div>
+    <nav>
+      <form action="/search" method="GET">
+        <label for="name">Find a landmark</label>
+        <input type="text" name="name" />
+        <button class="search-btn" type="submit">
+          <img class="icon" src="/icons/search-white.png" alt="Search" />
+        </button>
+      </form>
+      <div>
+        <p>By borough</p>
+        <ul>
+          <% options.forEach(option => { %>
+          <a href="/<%= option.borough %>"
+            ><li><%= capitalizeAll(option.borough) %></li></a
+          >
+          <% }); %><a href="/all"><li id="show-all-btn">Show All</li></a>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <footer>
+    <a href="/about">About this project</a>
+  </footer>
+</div>
