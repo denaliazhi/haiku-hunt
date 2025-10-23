@@ -38,7 +38,7 @@ async function getPublished(userId) {
 /* Get all clues saved by user */
 async function getSaved(userId) {
   const sql = `
-    SELECT * FROM clues c
+    SELECT *, s.userId AS is_saved FROM clues c
     JOIN saved_clues s ON c.clueId = s.clueId
     JOIN landmarks l ON c.landmarkId = l.id
     WHERE s.userId = $1

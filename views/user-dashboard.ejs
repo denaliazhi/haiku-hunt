@@ -5,25 +5,26 @@
 <html lang="en">
   <%- include("./partials/head.ejs") %>
   <body>
-    <%- include("./partials/navigation.ejs"); %>
+    <%- include("./partials/navigation.ejs") %>
     <main>
       <div class="page-header">
         <p>Welcome back, <%= currentUser.username %></p>
         <p><%= message %></p>
       </div>
-      <%- include("./partials/dashboard-nav.ejs", {selectedTab}); %>
+      <%- include("./partials/dashboard-nav.ejs", {selectedTab}) %>
       <article class="card-details">
         <h1><%= tabTitle %></h1>
         <div class="clue-container">
           <% if (clues) { clues.map((clue) => { %> 
             <% if (selectedTab === 'solved') { %>
               <%- include("./partials/landmark-card.ejs", {entry: clue}) %>
-            <% }} else { %>
+            <% } else { %>
               <%- include ("./partials/clue-card.ejs", {clue,
               showTool: selectedTab === 'published' 
               ? 'delete' 
-              : 'save'}) %> 
-            <% }) %>
+              : 'save'
+              }) %> 
+          <% }}) %>
           <% } %>
         </div>
       </article>

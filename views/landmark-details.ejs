@@ -29,8 +29,13 @@
           <div>
             <h2>Location</h2>
             <p>
-              <%= entry.parkname ? entry.parkname : entry.location ?
-              entry.location : "Not available" %>
+              <% if (entry.is_solved) { %>
+                <%= entry.parkname ? entry.parkname : entry.location ?
+                entry.location : "Not available" %>
+              <% } else { %>
+                <%= entry.parkname ? obfuscate(entry.parkname) : entry.location ?
+                obfuscate(entry.location) : "Not available" %>
+              <% } %>
             </p>
           </div>
           <div>
@@ -49,7 +54,7 @@
           <%- include("./partials/blank-clue-card.ejs", {entry, message: '+ Add a clue'}) %> 
           <% if (clues[0].clueid) {
               clues.map((clue) => { %> 
-                <%- include("./partials/clue-card.ejs", {entry, clue}) %> 
+                <%- include("./partials/clue-card.ejs", {clue, showTool: 'save'}) %> 
           <%  }) 
             } %>
         </div>

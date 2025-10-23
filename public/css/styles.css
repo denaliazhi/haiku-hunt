@@ -44,6 +44,7 @@ a:visited {
 }
 
 button {
+  color: rgb(var(--dark-main));
   font-family: "DM Sans";
   font-size: 1rem;
 
@@ -80,10 +81,12 @@ input {
 .icon {
   height: 1rem;
   width: 1rem;
+  transition: transform 100ms ease-out;
 }
 
 .icon:hover {
   cursor: pointer;
+  transform: scale(1.4);
 }
 
 /* Sidebar Elements */
@@ -140,11 +143,6 @@ header form {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-button.search-btn:hover {
-  cursor: pointer;
-  border: 2px solid white;
 }
 
 nav {
@@ -255,17 +253,24 @@ a.cta-btn {
 /*  User Dashboard Elements */
 
 .dashboard-nav {
-  color: rgb(var(--dark-main));
   margin: 1rem 0 -0.3rem;
-
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
 
+.dashboard-nav > a {
+  color: rgb(var(--dark-main));
+}
+
 .dashboard-nav a:not(.selected) {
   opacity: 0.7;
   background-color: transparent;
+  transition: opacity 100ms ease-in;
+}
+
+.dashboard-nav a:not(.selected):hover {
+  opacity: 1;
 }
 
 .selected {
@@ -273,6 +278,10 @@ a.cta-btn {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   background-color: rgb(var(--background));
+}
+
+.dashboard-nav + .card-details .card {
+  box-shadow: -1px 1px 5px rgba(var(--shadow), 0.1);
 }
 
 /* Search Result Elements */
@@ -311,6 +320,11 @@ main > h1,
   padding: 1rem;
   border-radius: var(--rounded);
   background-color: rgb(var(--background));
+  transition: transform 100ms ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-10px);
 }
 
 .card .clue-card {
@@ -402,10 +416,6 @@ main > h1,
   flex-wrap: wrap;
 }
 
-.landmark-facts > div {
-  width: 12rem;
-}
-
 .categories {
   margin: 1rem 0 1.5rem;
   display: flex;
@@ -480,7 +490,8 @@ main > h1,
   gap: 0.5rem;
 }
 
-.save-btn {
+.save-btn,
+.delete-btn {
   display: flex;
 }
 
@@ -695,6 +706,7 @@ main > h1,
   }
 
   .clue-container {
+    margin-top: 2rem;
     grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
   }
 
