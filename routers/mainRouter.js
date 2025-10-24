@@ -1,3 +1,6 @@
+/*
+ * Handle general requests
+ */
 import { Router } from "express";
 import mainController from "../controllers/mainController.js";
 

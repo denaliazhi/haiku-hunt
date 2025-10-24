@@ -1,3 +1,5 @@
+/* Fields retrieved for monuments data from API */
+
 const FIELDS = [
   "name",
   "number",

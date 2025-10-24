@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <div class="side-bar">
+  <header>
+    <div>
+      <div class="site-name"><a href="/">Haiku Hunt</a></div>
+      <p>A poetic search for landmarks in NYC</p>
+    </div>
+  </header>
+  <footer>
+    <a href="/about">About this project</a>
+  </footer>
+</div>
+    <main>
+      <h1><% errorCode %></h1>
+      <div class="about">
+        <h2>Oh no! <% errorMessage %></h2>
+        <p>Sorry about that.</p>
+        <a class="cta-button" href="/"><p>Return home</p></a>
+      </div>
+    </main>
+  </body>
+</html>

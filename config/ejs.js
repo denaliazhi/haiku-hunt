@@ -1,14 +1,13 @@
+/**
+ * Function to determine filter options shown in sidebar,
+ * based on the boroughs to which landmarks belong
+ */
 import { getAllBoroughs } from "../data/queries/dbLandmarks.js";
 
 async function ejsConfig(app) {
-  try {
-    const boroughs = await getAllBoroughs();
-    if (boroughs.length > 0) {
-      app.locals.options = boroughs;
-    }
-  } catch (err) {
-    console.log("Sidebar config not loaded: ", err);
-    throw new Error("There was an issue loading this application.");
+  const boroughs = await getAllBoroughs();
+  if (boroughs.length > 0) {
+    app.locals.options = boroughs;
   }
 }
 

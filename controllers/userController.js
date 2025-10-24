@@ -39,6 +39,7 @@ const controller = {
     });
   },
 
+  /* Delete a clue */
   postDeleteClue: async (req, res) => {
     const clueId = req.params.clueid;
     try {
@@ -46,7 +47,7 @@ const controller = {
     } catch (err) {
       console.log(err);
     }
-    res.redirect("/account");
+    res.redirect("/user");
   },
 };
 

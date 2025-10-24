@@ -3,6 +3,16 @@
  */
 import pool from "../dbConnection.js";
 
+/* Get all boroughs where landmarks are located */
+async function getAllBoroughs() {
+  const query = `
+  SELECT DISTINCT borough
+  FROM landmarks
+  ;`;
+  const { rows } = await pool.query(query);
+  return rows;
+}
+
 /* Get details for a landmark */
 async function getLandmarkDetails(landmarkId) {
   const sql = `
@@ -132,16 +142,6 @@ async function filterByNameUser(userId, term) {
      ORDER BY c.ranking
      ;`;
   const { rows } = await pool.query(query, [userId, `%${term}%`]);
-  return rows;
-}
-
-/* Get all boroughs where landmarks are located */
-async function getAllBoroughs() {
-  const query = `
-  SELECT DISTINCT borough
-  FROM landmarks
-  ;`;
-  const { rows } = await pool.query(query);
   return rows;
 }
 

@@ -68,7 +68,7 @@ const controller = {
 
   /* Authenticate user sign-in */
   postSignIn: passport.authenticate("local", {
-    successRedirect: "/account",
+    successRedirect: "/user",
     failureRedirect: "/sign-in",
     failureMessage: true,
   }),
