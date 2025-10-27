@@ -8,35 +8,98 @@
     <main>
       <h1>About This Project</h1>
       <div class="about">
-        <div class="creators-note">
-          <h2>Creator's Note</h2>
-          <p>
-            Haiku Hunt is a personal project by
-            <a href="https://github.com/denaliazhi">Denalia Zhi</a>.
-          </p>
+        <p>
+          Haiku Hunt is part-scavenger hunt, part-poetry forum.
+          Guess landmarks around NYC based on haiku clues 
+          and contribute poetic takes of your own favorite places.
+        </p>
+        <hr>
+        <div >
+          <ul>
+            <li>
+              <h2>How to play</h2>
+              <p>
+                Haiku Hunt is a free-style adventure. 
+              </p>
+              <ol class="how-to-play">
+                <li>Click on any landmark to view its clues.</li>
+                <li>Submit a guess for the landmark's name. Guess as many times as you want.</li>
+                <li>Once you've solved it, leave a clue of your own.</li>
+              </ol>
+            </li>
+            <li>
+              <h3>Features</h3>
+              <p>Create an account to access the following features:</p>
+              <ul id="features">
+                <li>Submit guesses for landmarks</li>
+                <li>Track your solved landmarks</li>
+                <li>Publish poems</li>
+                <li>Manage poems you've published</li>
+                <li>Save your favorite poems</li>
+              </ul>
+            </li>
+          </ul>
         </div>
+        <hr>
         <div class="faq">
           <h2>FAQ</h2>
           <ul>
             <li>
               <h3>What's a haiku?</h3>
               <p>
-                Traditionally, a haiku is a Japanese poem of 3 lines with 5, 7,
-                and 5 syllables respectively. In Haiku Hunt, the term refers
-                more liberally to any clue that follows the 5-7-5 syllable
-                pattern. Whether a clue has any poetic value is subjective.
+                Traditionally, a haiku is a Japanese poem of 3 lines with 5, 7, 
+                and 5 syllables. In Haiku Hunt, the term liberally applies to any 
+                clue that follows the same syllabic pattern.
               </p>
             </li>
             <li>
-              <h3>How do I play?</h3>
+              <h3>I want to write a clue for a landmark that I haven't solved yet. Is that possible?</h3>
               <p>
-                Haiku Hunt is a free-style adventure. Narrow down your hunt
-                using the search/filter bar (or if you're feeling ambitious, go
-                for all landmarks across all boroughs). Read a clue card and
-                guess the name of the landmark. Click on the card to reveal the
-                answer.
+                If you have a landmark in mind, you can search for it using the left-hand toolbar.
               </p>
             </li>
+            <li>
+              <h3>What should I write about?</h3>
+              <p>
+                Your haiku can describe the landmark, its surrounding area, or an experience that you 
+                had while visiting it in-person (an optional but highly recommended part of the game). 
+              </p>
+            </li>
+          </ul>
+        </div>
+        <hr>
+        <div>
+          <h2>Known Issues</h2>
+          <ul id="known-issues">
+            <li>
+              When submitting a haiku, you may get an error stating that a line
+              doesn't match the expected syllabic count, but it actually does. The 
+              language library that is used to validate this information may overlook 
+              certain instances where a word is pronounced with fewer syllables than
+              its spelling suggests.
+            </li>
+            <li>
+              This project currently runs on a free database service with limited
+              compute time. Once the 5h limit is reached, only the home, about, and sign-in pages
+              are rendered. All other pages depend on queries to the database, so they will
+              return error messages.
+            </li>
+            <li>
+              When a user unsaves a poem from their dashboard, the user will be redirected to
+              the landmark details page for the poem that they just unsaved. Ideally, the user
+              should remain on their dashboard after unsaving a poem.
+            </li>
+          </ul>
+        </div>
+        <hr>
+        <div>
+          <h3>Credits</h3>
+          <ul>
+            <li>Designed and coded by
+            <a href="https://github.com/denaliazhi">Denalia Zhi</a></li>
+            <li>Landmarks were sourced from the NYC Open Data 
+              <a href="https://data.cityofnewyork.us/Recreation/NYC-Parks-Monuments">
+              "Parks and Monuments"</a> API</li>
           </ul>
         </div>
       </div>

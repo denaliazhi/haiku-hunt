@@ -41,7 +41,14 @@ const filterLandmarksQuery = `
   WHERE id IN 
   ( SELECT id 
     FROM dupes 
-    WHERE NOT (dupeRank = 1 AND extant = 'Y' AND name ILIKE '%fountain%'));
+    WHERE NOT (dupeRank = 1 AND extant = 'Y' AND (name ILIKE '%fountain%' or descrip ILIKE '%fountain%')));
+
+  UPDATE landmarks
+  SET borough = CASE
+    WHEN borough = 'M' THEN 'Manhattan'
+    WHEN borough = 'Q' THEN 'Queens'
+    ELSE borough
+  END;
 `;
 
 /* Format data for all rows as comma-separated list */
