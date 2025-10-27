@@ -52,6 +52,10 @@ button {
   border: none;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 input {
   font-size: 1rem;
   font-family: "DM Sans";

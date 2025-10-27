@@ -63,7 +63,7 @@ app.use((req, res, next) => {
 
 app.use("/", mainRouter);
 app.use("/user", userRouter);
-app.use("/:location-filter", landmarkRouter);
+app.use("/:location", landmarkRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

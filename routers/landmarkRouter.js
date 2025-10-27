@@ -6,8 +6,10 @@ import landmarkController from "../controllers/landmarkController.js";
 import { isAuth } from "../config/passport.js";
 
 const router = Router();
+
 router.get("/", landmarkController.getSearch);
 router.get("/:id", landmarkController.getDetails);
+
 router.get("/:id/add", landmarkController.getAddClue);
 router.post("/:id/add", isAuth, landmarkController.postAddClue);
 

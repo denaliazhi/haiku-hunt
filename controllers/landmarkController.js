@@ -21,7 +21,6 @@ const controller = {
   /* Render landmarks based on filter criteria*/
   getSearch: async (req, res) => {
     let matches, title;
-
     // Determine SQL query based on url parameter
     const param = decodeURI(req.baseUrl).slice(1);
     if (param.match(/search/i)) {
@@ -77,7 +76,6 @@ const controller = {
           backLink: backLink,
         });
       } else {
-        console.log("Hereee!");
         // User hasn't solved the landmark yet
         res.redirect(
           `${backLink}?guessing=true&error=${encodeURI(
