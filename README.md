@@ -2,7 +2,7 @@
 By Denalia Zhi  [👩🏻](https://github.com/denaliazhi)
 
 ### A poetic search for landmarks around NYC
-<img width="1461" height="915" alt="Cover photo for the app" src="https://github.com/user-attachments/assets/d6510a2a-b8de-41f2-85fd-ba2172890454" />
+<img width="1461" height="915" alt="Cover photo for the app" src="https://github.com/user-attachments/assets/0376503f-c32d-434c-9cd1-8c4820301fff" />
 
 <br>**Part-scavenger hunt, part-poetry forum**. Guess landmarks around NYC based on haiku clues and contribute poetic takes of your own favorite places.
 
